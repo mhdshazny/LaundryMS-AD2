@@ -1,0 +1,143 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.UserModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
+}
+
+<h1>Manage Employee-User</h1>
+
+<p>
+    <a asp-action="Create">Create New User</a>
+</p>
+
+<div class="card">
+
+    @*@if (HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Admin")
+    {
+        <div class="card-header">
+            <a asp-action="Create" class="btn btn-info">Create New</a>
+        </div>
+    }
+    else if (HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Manager")
+    {
+        <div class="card-header">
+            <a asp-action="Create" class="btn btn-info">Create New</a>
+        </div>
+    }*@
+
+
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="UserTable" class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.lName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DoB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NIC)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Contact)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Branch)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.lName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NIC)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Branch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+
+                                <a asp-action="Edit" asp-route-id="@item.UserID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.UserID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.UserID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#UserTable").DataTable();
+        });
+            //function UserReport() {
+            //    var id = id;
+            //    window.open(
+            //        //asp - controller="User" asp - action="UserReport"
+            //        "User/UserReportIndividual", "_blank", id);
+            //}
+    </script>
+}

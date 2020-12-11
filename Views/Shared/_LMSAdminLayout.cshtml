@@ -1,0 +1,517 @@
+﻿@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <div>
+            @RenderBody()
+        </div>
+    </body>
+    </html>*@
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@ViewBag.Title</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous"></script>*@
+    @*<script src="~/plugins/MDB/js/mdb.min.js"></script>*@
+    @*<link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />*@
+
+
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="~/plugins/datatables/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Resources/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Resources/fonts/font-awesome-4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="~/Resources/AdminLTE/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.css">
+
+    <link rel="stylesheet" href="~/plugins/MDB/css/mdb.min.css">
+
+</head>
+<body class="sidebar-mini layout-fixed" style="height:auto">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: #222d32">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-controller="Admin" asp-action="Projects" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-controller="Identity" asp-action="Login" class="nav-link">Log Out</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-lg-4">
+                <li class="text-right text-light">
+                </li>
+            </ul>
+        </nav>
+        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #222d32">
+            <a asp-action="Projects" asp-controller="Admin" class="brand-link">
+                <span class="brand-text font-weight-light text-center ml-2">Prject Management Tool</span><br>
+                <p class="brand-text font-weight-light text-center">V 1.21</p>
+            </a>
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="~/Resources/images/user-logo.png" class="img-circle elevation-4" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a asp-action="Details" asp-controller="User" asp-route-id="" id="SessionLoad" class="d-block">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2 center text-light">
+                    <div class="inline-block ">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <!-- Add icons to the links using the .nav-icon class
+                            with font-awesome or any other icon font library -->
+                            @* Dashboard *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="Admin" asp-action="Projects" class="nav-link bg-secondary">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Dashboard
+                                        @*<i class="right fas fa-angle-left"></i>*@
+                                    </p>
+                                </a>
+                            </li>
+
+                            @* User *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="User" asp-action="Create" class="nav-link bg-blue">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        User Options
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="User" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>View Users</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="User" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Create User Account</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="User" asp-action="UserReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Generate User Report</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>User Issues</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            @* Empployee Efficiency *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="#" asp-action="#" class="nav-link bg-blue">
+                                    <i class="nav-icon fas fa-user-plus"></i>
+                                    <p>
+                                        Employee Efficiency
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="EmpPerfModels" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="nav-icon fa fa-percent ml-2"></i>
+                                            <p>Employees & Progresses</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="EmpPerfModels" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
+                                            <p>Record Performance</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
+                                            <p>Team-Eff Issues</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @* Project *@
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link bg-green">
+                                    <i class="nav-icon fas fa-cogs"></i>
+                                    <p>
+                                        Customer Options
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="Projects" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Customer</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Projects" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Add a Customer Acc</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Projects" asp-action="ProjectsReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>All Projects Report</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="fa fa-info-circle nav-icon ml-3"></i>
+                                            <p>Project Issues</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            @* Tasks *@
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link bg-teal">
+                                    <i class="nav-icon fas fa-tasks"></i>
+                                    <p>
+                                        Tasks Options
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="PrTasks" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Tasks</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="PrTasks" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Create a Task</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            @* Bugs *@
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link bg-indigo">
+                                    <i class="nav-icon fas fa-bug"></i>
+                                    <p>
+                                        Bugs Fixation
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>All Bugs</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Report Bugs</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            @* Teams *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="#" asp-action="#" class="nav-link bg-info">
+                                    <i class="nav-icon fas fa-users-cog"></i>
+                                    <p>
+                                        Teams Options
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="Teams" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>View Teams</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="TeamEmp" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Teams and members</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Teams" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Create a Team</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="TeamEmp" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Add Team Members</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Team Issues</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @* Team Efficiency *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="#" asp-action="#" class="nav-link bg-info">
+                                    <i class="nav-icon fa fa-trophy"></i>
+                                    <p>
+                                        Teams Efficiency
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="TeamPerf" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="nav-icon fa fa-percent ml-3"></i>
+                                            <p>Teams and Progresses</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="TeamPerf" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Record Performance</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Team-Eff Issues</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @* Reported Issues *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="#" asp-action="#" class="nav-link bg-red">
+                                    <i class="nav-icon fas fa-chain-broken"></i>
+                                    <p>
+                                        Reported Issues
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="nav-icon fa fa-percent ml-3"></i>
+                                            <p>All Issues</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Report an Issue</p>
+                                        </a>
+                                    </li>
+                                    @*<li class="nav-item">
+                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Team-Eff Issues</p>
+                                            </a>
+                                        </li>*@
+                                    <li class="nav-item">
+                                        <a asp-action="IssuesReport" asp-controller="Issues" asp-all-route-data="@null" target="_blank" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>All Issues Report</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="navbar-brand">
+                        <div class="d-inline-block" style="margin-top:100%">
+                            <div class="date-time-span sidebar" fxflexalign="center center" fxlayout="row" style="flex-direction: row; box-sizing: border-box; display: flex;">
+                                <div>
+                                    <span><mat-icon class="mat-icon material-icons" role="img" aria-hidden="true"></mat-icon></span>
+                                </div>
+
+                                <div>
+                                    <span class="date-time-span">
+                                        @*@DateTime.Now.ToString("ddd,MMM-yyyy  (HH:mm:ss)")*@
+                                        <time datetime="hh:mm">@DateTime.Now.ToString()</time>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </nav>
+                <!-- /.sidebar-menu -->
+
+
+            </div>
+
+        </aside>
+
+
+
+        @* Render Body starts *@
+        <div class="content-wrapper" style="        background-color: #ecf0f5">
+            @*   <h1 class="text-center mt-5">Hello World</h1>*@
+            <div class="ml-3 mr-3">
+                <div class="pt-3">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+
+
+        @* Footer *@
+        <footer class="main-footer text-dark" style="        background-color: #ffffff">
+            <strong>Copyright © 2020-Future <span class="badge-pill bg-black">Mhd Shazny</span></strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0
+            </div>
+        </footer>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!--<script language="javascript">-->
+    @*$(document).ready(function () {
+
+            //let session = @HttpContextAccessor.HttpContext.Session.GetString("SessionEmail");
+
+            if (session != "" || session == null) {
+                //window.location = "../Identity/Login"
+            }
+
+        });*@
+
+
+
+
+    <!--</script>-->
+
+    <script>
+        function UserReport() {
+            window.open(
+                //asp - controller="User" asp - action="UserReport"
+                "User/UserReport", "_blank");
+        }
+        function IssuesReport() {
+            window.open(
+                //asp - controller="User" asp - action="UserReport"
+                "Issues/IssuesReport", "_blank");
+        }
+    </script>
+
+
+    @*<script src="~/plugins/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/plugins/jquery/jquery.min.js"></script>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    @*<script src="external/jquery/jquery.js"></script>
+        <script src="jquery-ui.min.js"></script>*@
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+
+    <!-- jQuery -->
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="~/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/plugins/moment/moment.min.js"></script>
+    <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="~/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/Resources/AdminLTE/dist/js/adminlte.js"></script>
+    <script src="~/Resources/AdminLTE/dist/js/pages/dashboard.js"></script>
+    <script src="~/Resources/AdminLTE/dist/js/demo.js"></script>
+
+    <script type="text/javascript" src="~/plugins/MDB/js/mdb.min.js"></script>
+    <script type="text/javascript" src="~/plugins/popper/popper.min.js"></script>
+</body>
+</html>
