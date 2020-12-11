@@ -17,5 +17,13 @@ namespace LaundryMS_AD2.Models
         public DbSet<UserModel> UserData { get; set; }
         public DbSet<UserModel> EmpIdentityData { get; set; }
 
+        public DbSet<CustomerModel> CustomerData { get; set; }
+        public DbSet<ProductModel> ProductData { get; set; }
+        public DbSet<PrTypeModel> PrTypeData { get; set; }
+        public DbSet<OrderModel> OrderData { get; set; }
+        public DbSet<OrderListModel> OrderListData { get; set; }
+        public DbSet<PackageModel> PackageData { get; set; }
+        public DbSet<EmpRoleModel> EmpRoleData { get; set; }
+
     }
 }
