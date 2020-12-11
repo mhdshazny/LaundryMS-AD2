@@ -39,6 +39,7 @@ namespace LaundryMS_AD2.Models
 
         [Display(Name = "Address Line")]
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Address { get; set; }
 
         [Display(Name = "Contact")]

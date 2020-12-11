@@ -1,0 +1,67 @@
+﻿@model LaundryMS_AD2.Models.CustomerModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CustomerModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusfName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusfName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CuslName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CuslName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusNIC)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusNIC)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusAddress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusAddress)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusContact)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusContact)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusEmail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusEmail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusPassw)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusPassw)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CusStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CusStatus)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CusID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
