@@ -1,0 +1,44 @@
+﻿@model LaundryMS_AD2.Models.PrTypeModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>PrTypeModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PrType" class="control-label"></label>
+                <input asp-for="PrType" class="form-control" />
+                <span asp-validation-for="PrType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrTypeDescr" class="control-label"></label>
+                <textarea asp-for="PrTypeDescr" class="form-control"></textarea>
+                <span asp-validation-for="PrTypeDescr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrTypeStatus" class="control-label"></label>
+                <input asp-for="PrTypeStatus" class="form-control" />
+                <span asp-validation-for="PrTypeStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

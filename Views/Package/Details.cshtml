@@ -1,0 +1,43 @@
+﻿@model LaundryMS_AD2.Models.PackageModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PackageModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PkgName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PkgName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PkgDescr)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PkgDescr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PkgPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PkgPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PkgStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PkgStatus)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PkgID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

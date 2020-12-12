@@ -50,9 +50,9 @@ namespace LaundryMS_AD2.Models
         [Required]
         public string Role { get; set; }
 
-        [Display(Name = "Branch Name")]
-        [Required]
-        public string Branch { get; set; }
+        //[Display(Name = "Branch Name")]
+        //[Required]
+        //public string Branch { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

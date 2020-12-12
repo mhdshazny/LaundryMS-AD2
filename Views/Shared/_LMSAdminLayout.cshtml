@@ -63,43 +63,59 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a asp-controller="Admin" asp-action="Projects" class="nav-link">Home</a>
+                    <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a asp-controller="Identity" asp-action="Login" class="nav-link">Log Out</a>
+                    <a class="nav-link">Contact</a>
                 </li>
+
             </ul>
-            <ul class="navbar-nav mr-lg-4">
+            <ul class="navbar-nav mr-1" >
                 <li class="text-right text-light">
+                    <div class="dropdown" style="background-color: #222d32">
+                        <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                            User Email
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-action="Edit" asp-controller="User" asp-route-data="UserID">Edit User Profile</a>
+                            <a class="dropdown-item" href="#">Report Issues</a>
+                            <a class="dropdown-item" asp-action="Login" asp-controller="Identity">Logout</a>
+                        </div>
+                    </div>                
                 </li>
             </ul>
+
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #222d32">
-            <a asp-action="Projects" asp-controller="Admin" class="brand-link">
-                <span class="brand-text font-weight-light text-center ml-2">Prject Management Tool</span><br>
-                <p class="brand-text font-weight-light text-center">V 1.21</p>
-            </a>
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="~/Resources/images/user-logo.png" class="img-circle elevation-4" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a asp-action="Details" asp-controller="User" asp-route-id="" id="SessionLoad" class="d-block">
-                        </a>
-                    </div>
-                </div>
+
+            <div class="container-fluid">
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2 center text-light">
                     <div class="inline-block ">
+                        <div class="user-panel">
+                            <a asp-action="Projects" asp-controller="Admin" class="brand-link">
+                                @*<span class="center">Institute MS</span>*@
+                                <p class=" text-center">Institute MS - V 1.0</p>
+                            </a>
+                        </div>
+                        <!-- Sidebar user panel (optional) -->
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div class="image">
+                                <img src="https://mpng.subpng.com/20180329/zue/kisspng-computer-icons-user-profile-person-5abd85306ff7f7.0592226715223698404586.jpg" class="img-circle elevation-4" alt="User Image">
+                            </div>
+                            <div class="info">
+                                <a asp-action="Details" asp-controller="User" asp-route-id="" id="SessionLoad" class="d-block text-white-50">
+                                    IMS-SystemUser
+                                </a>
+                            </div>
+                        </div>
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
-                            with font-awesome or any other icon font library -->
+        with font-awesome or any other icon font library -->
                             @* Dashboard *@
                             <li class="nav-item has-treeview">
-                                <a asp-controller="Admin" asp-action="Projects" class="nav-link bg-secondary">
+                                <a asp-controller="Home" asp-action="Index" class="nav-link text-light">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Dashboard
@@ -110,7 +126,7 @@
 
                             @* User *@
                             <li class="nav-item has-treeview">
-                                <a asp-controller="User" asp-action="Create" class="nav-link bg-blue">
+                                <a asp-controller="User" asp-action="Create" class="nav-link text-light">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         User Options
@@ -120,66 +136,35 @@
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a asp-controller="User" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <i class="far fa-circle nav-icon ml-2"></i>
                                             <p>View Users</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a asp-controller="User" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <i class="far fa-circle nav-icon ml-2"></i>
                                             <p>Create User Account</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a asp-controller="User" asp-action="UserReport" target="_blank" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <i class="far fa-circle nav-icon ml-2"></i>
                                             <p>Generate User Report</p>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <i class="far fa-circle nav-icon ml-2"></i>
                                             <p>User Issues</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
 
-
-                            @* Empployee Efficiency *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="#" asp-action="#" class="nav-link bg-blue">
-                                    <i class="nav-icon fas fa-user-plus"></i>
-                                    <p>
-                                        Employee Efficiency
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="EmpPerfModels" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="nav-icon fa fa-percent ml-2"></i>
-                                            <p>Employees & Progresses</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="EmpPerfModels" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Record Performance</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Team-Eff Issues</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
                             @* Project *@
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link bg-green">
+                                <a href="#" class="nav-link text-light">
                                     <i class="nav-icon fas fa-cogs"></i>
                                     <p>
                                         Customer Options
@@ -188,65 +173,107 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a asp-controller="Projects" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Customer</p>
+                                        <a asp-controller="Customer" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
+                                            <p>Manage Customers</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a asp-controller="Projects" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                        <a asp-controller="Customer" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
                                             <p>Add a Customer Acc</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a asp-controller="Projects" asp-action="ProjectsReport" target="_blank" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>All Projects Report</p>
+                                        <a asp-controller="Customer" asp-action="CustomerReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
+                                            <p>Customer Report</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="fa fa-info-circle nav-icon ml-3"></i>
-                                            <p>Project Issues</p>
+                                            <i class="fa fa-info-circle nav-icon ml-2"></i>
+                                            <p>Customer Issues</p>
                                         </a>
                                     </li>
 
                                 </ul>
                             </li>
 
+
+                            @* Empployee Efficiency *@
+                            <li class="nav-item has-treeview">
+                                <a asp-controller="#" asp-action="#" class="nav-link text-light">
+                                    <i class="nav-icon fas fa-user-plus"></i>
+                                    <p>
+                                        Product Options
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a asp-controller="Product" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="nav-icon fa fa-percent ml-2"></i>
+                                            <p>Manage Products</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Product" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
+                                            <p>Add a Product</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-2"></i>
+                                            <p>Product Issues</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             @* Tasks *@
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link bg-teal">
+                                <a href="#" class="nav-link text-light">
                                     <i class="nav-icon fas fa-tasks"></i>
                                     <p>
-                                        Tasks Options
+                                        Order Options
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a asp-controller="PrTasks" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                        <a asp-controller="Order" asp-action="Index" class="nav-link bg-gradient-secondary">
                                             <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Tasks</p>
+                                            <p>View Orders</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a asp-controller="PrTasks" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                        <a asp-controller="Order" asp-action="Create" class="nav-link bg-gradient-secondary">
                                             <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Create a Task</p>
+                                            <p>Create an Order</p>
                                         </a>
                                     </li>
-
+                                    <li class="nav-item">
+                                        <a asp-controller="OrderList" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>View Order List</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Order" asp-action="OrderReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Order Report</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 
                             @* Bugs *@
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link bg-indigo">
+                                <a href="#" class="nav-link text-light">
                                     <i class="nav-icon fas fa-bug"></i>
                                     <p>
-                                        Bugs Fixation
+                                        Package Options
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
@@ -254,148 +281,37 @@
                                     <li class="nav-item">
                                         <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
                                             <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>All Bugs</p>
+                                            <p>View Packages</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
                                             <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Report Bugs</p>
+                                            <p>Create a Package</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                            <i class="far fa-circle nav-icon ml-3"></i>
+                                            <p>Package Issues</p>
                                         </a>
                                     </li>
 
                                 </ul>
                             </li>
 
-                            @* Teams *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="#" asp-action="#" class="nav-link bg-info">
-                                    <i class="nav-icon fas fa-users-cog"></i>
-                                    <p>
-                                        Teams Options
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="Teams" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>View Teams</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="TeamEmp" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Teams and members</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Teams" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Create a Team</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="TeamEmp" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Add Team Members</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Team Issues</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            @* Team Efficiency *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="#" asp-action="#" class="nav-link bg-info">
-                                    <i class="nav-icon fa fa-trophy"></i>
-                                    <p>
-                                        Teams Efficiency
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="TeamPerf" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="nav-icon fa fa-percent ml-3"></i>
-                                            <p>Teams and Progresses</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="TeamPerf" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Record Performance</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Team-Eff Issues</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            @* Reported Issues *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="#" asp-action="#" class="nav-link bg-red">
-                                    <i class="nav-icon fas fa-chain-broken"></i>
-                                    <p>
-                                        Reported Issues
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="nav-icon fa fa-percent ml-3"></i>
-                                            <p>All Issues</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Report an Issue</p>
-                                        </a>
-                                    </li>
-                                    @*<li class="nav-item">
-                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Team-Eff Issues</p>
-                                            </a>
-                                        </li>*@
-                                    <li class="nav-item">
-                                        <a asp-action="IssuesReport" asp-controller="Issues" asp-all-route-data="@null" target="_blank" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>All Issues Report</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
                         </ul>
+                        <ul class="navbar-brand" style="position:absolute; left:0; bottom:0; ">
+                            <li>
+                                <span class="date-time-span">
+                                    <time datetime="hh:mm">@DateTime.Now.ToString()</time>
+                                </span>
+                            </li>
 
+                        </ul>
                     </div>
-                    <div class="navbar-brand">
-                        <div class="d-inline-block" style="margin-top:100%">
-                            <div class="date-time-span sidebar" fxflexalign="center center" fxlayout="row" style="flex-direction: row; box-sizing: border-box; display: flex;">
-                                <div>
-                                    <span><mat-icon class="mat-icon material-icons" role="img" aria-hidden="true"></mat-icon></span>
-                                </div>
-
-                                <div>
-                                    <span class="date-time-span">
-                                        @*@DateTime.Now.ToString("ddd,MMM-yyyy  (HH:mm:ss)")*@
-                                        <time datetime="hh:mm">@DateTime.Now.ToString()</time>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
                 </nav>

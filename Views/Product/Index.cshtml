@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.ProductModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="IndexTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PrName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDescr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDescr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrStatus)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PrID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PrID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PrID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#IndexTable").DataTable();
+        });
+    </script>
+}
