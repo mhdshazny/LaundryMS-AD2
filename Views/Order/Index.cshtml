@@ -1,0 +1,93 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.OrderModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="IndexTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderCusID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderApprvdBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTotQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTotAmnt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDelivery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDeliveryAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDescr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderCusID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderApprvdBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTotQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTotAmnt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDelivery)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDeliveryAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDescr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#IndexTable").DataTable();
+        });
+    </script>
+}

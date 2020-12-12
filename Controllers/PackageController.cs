@@ -9,22 +9,22 @@ using LaundryMS_AD2.Models;
 
 namespace LaundryMS_AD2.Controllers
 {
-    public class UserController : Controller
+    public class PackageController : Controller
     {
         private readonly DbConnectionClass _context;
 
-        public UserController(DbConnectionClass context)
+        public PackageController(DbConnectionClass context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Package
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserData.ToListAsync());
+            return View(await _context.PackageData.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Package/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -32,52 +32,39 @@ namespace LaundryMS_AD2.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.UserData
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (userModel == null)
+            var packageModel = await _context.PackageData
+                .FirstOrDefaultAsync(m => m.PkgID == id);
+            if (packageModel == null)
             {
                 return NotFound();
             }
 
-            return View(userModel);
+            return View(packageModel);
         }
 
-        // GET: User/Create
+        // GET: Package/Create
         public IActionResult Create()
         {
-            //New ID
-            var Id = _context.UserData
-                            .Max(i => i.UserID)
-                            .ToString();
-            int num = int.Parse(Id.Substring(4, 6)) + 1;
-            string NewID = "USER" + num.ToString().PadLeft(6, '0');
-            ViewBag.NewID = NewID.ToString();
-
-            //Role List
-            List<EmpRoleModel> Role = _context.EmpRoleData.ToList();
-            ViewBag.Roles = new SelectList(Role, "EmpRoleID", "EmpRole");
-
-
             return View();
         }
 
-        // POST: User/Create
+        // POST: Package/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,fName,lName,Gender,DoB,NIC,Email,Address,Contact,Role,Password,Status")] UserModel userModel)
+        public async Task<IActionResult> Create([Bind("PkgID,PkgName,PkgDescr,PkgPrice,PkgStatus")] PackageModel packageModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userModel);
+                _context.Add(packageModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
+            return View(packageModel);
         }
 
-        // GET: User/Edit/5
+        // GET: Package/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -85,24 +72,22 @@ namespace LaundryMS_AD2.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.UserData.FindAsync(id);
-            ViewBag.Passw = userModel.Password.ToString();
-
-            if (userModel == null)
+            var packageModel = await _context.PackageData.FindAsync(id);
+            if (packageModel == null)
             {
                 return NotFound();
             }
-            return View(userModel);
+            return View(packageModel);
         }
 
-        // POST: User/Edit/5
+        // POST: Package/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserID,fName,lName,Gender,DoB,NIC,Email,Address,Contact,Role,Password,Status")] UserModel userModel)
+        public async Task<IActionResult> Edit(string id, [Bind("PkgID,PkgName,PkgDescr,PkgPrice,PkgStatus")] PackageModel packageModel)
         {
-            if (id != userModel.UserID)
+            if (id != packageModel.PkgID)
             {
                 return NotFound();
             }
@@ -111,12 +96,12 @@ namespace LaundryMS_AD2.Controllers
             {
                 try
                 {
-                    _context.Update(userModel);
+                    _context.Update(packageModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserModelExists(userModel.UserID))
+                    if (!PackageModelExists(packageModel.PkgID))
                     {
                         return NotFound();
                     }
@@ -127,10 +112,10 @@ namespace LaundryMS_AD2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
+            return View(packageModel);
         }
 
-        // GET: User/Delete/5
+        // GET: Package/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -138,30 +123,30 @@ namespace LaundryMS_AD2.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.UserData
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (userModel == null)
+            var packageModel = await _context.PackageData
+                .FirstOrDefaultAsync(m => m.PkgID == id);
+            if (packageModel == null)
             {
                 return NotFound();
             }
 
-            return View(userModel);
+            return View(packageModel);
         }
 
-        // POST: User/Delete/5
+        // POST: Package/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var userModel = await _context.UserData.FindAsync(id);
-            _context.UserData.Remove(userModel);
+            var packageModel = await _context.PackageData.FindAsync(id);
+            _context.PackageData.Remove(packageModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserModelExists(string id)
+        private bool PackageModelExists(string id)
         {
-            return _context.UserData.Any(e => e.UserID == id);
+            return _context.PackageData.Any(e => e.PkgID == id);
         }
     }
 }

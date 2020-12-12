@@ -9,22 +9,22 @@ using LaundryMS_AD2.Models;
 
 namespace LaundryMS_AD2.Controllers
 {
-    public class UserController : Controller
+    public class OrderController : Controller
     {
         private readonly DbConnectionClass _context;
 
-        public UserController(DbConnectionClass context)
+        public OrderController(DbConnectionClass context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Order
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserData.ToListAsync());
+            return View(await _context.OrderData.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Order/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -32,52 +32,39 @@ namespace LaundryMS_AD2.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.UserData
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (userModel == null)
+            var orderModel = await _context.OrderData
+                .FirstOrDefaultAsync(m => m.OrderID == id);
+            if (orderModel == null)
             {
                 return NotFound();
             }
 
-            return View(userModel);
+            return View(orderModel);
         }
 
-        // GET: User/Create
+        // GET: Order/Create
         public IActionResult Create()
         {
-            //New ID
-            var Id = _context.UserData
-                            .Max(i => i.UserID)
-                            .ToString();
-            int num = int.Parse(Id.Substring(4, 6)) + 1;
-            string NewID = "USER" + num.ToString().PadLeft(6, '0');
-            ViewBag.NewID = NewID.ToString();
-
-            //Role List
-            List<EmpRoleModel> Role = _context.EmpRoleData.ToList();
-            ViewBag.Roles = new SelectList(Role, "EmpRoleID", "EmpRole");
-
-
             return View();
         }
 
-        // POST: User/Create
+        // POST: Order/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,fName,lName,Gender,DoB,NIC,Email,Address,Contact,Role,Password,Status")] UserModel userModel)
+        public async Task<IActionResult> Create([Bind("OrderID,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus")] OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userModel);
+                _context.Add(orderModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
+            return View(orderModel);
         }
 
-        // GET: User/Edit/5
+        // GET: Order/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -85,24 +72,22 @@ namespace LaundryMS_AD2.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.UserData.FindAsync(id);
-            ViewBag.Passw = userModel.Password.ToString();
-
-            if (userModel == null)
+            var orderModel = await _context.OrderData.FindAsync(id);
+            if (orderModel == null)
             {
                 return NotFound();
             }
-            return View(userModel);
+            return View(orderModel);
         }
 
-        // POST: User/Edit/5
+        // POST: Order/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserID,fName,lName,Gender,DoB,NIC,Email,Address,Contact,Role,Password,Status")] UserModel userModel)
+        public async Task<IActionResult> Edit(string id, [Bind("OrderID,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus")] OrderModel orderModel)
         {
-            if (id != userModel.UserID)
+            if (id != orderModel.OrderID)
             {
                 return NotFound();
             }
@@ -111,12 +96,12 @@ namespace LaundryMS_AD2.Controllers
             {
                 try
                 {
-                    _context.Update(userModel);
+                    _context.Update(orderModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserModelExists(userModel.UserID))
+                    if (!OrderModelExists(orderModel.OrderID))
                     {
                         return NotFound();
                     }
@@ -127,10 +112,10 @@ namespace LaundryMS_AD2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
+            return View(orderModel);
         }
 
-        // GET: User/Delete/5
+        // GET: Order/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -138,30 +123,30 @@ namespace LaundryMS_AD2.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.UserData
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (userModel == null)
+            var orderModel = await _context.OrderData
+                .FirstOrDefaultAsync(m => m.OrderID == id);
+            if (orderModel == null)
             {
                 return NotFound();
             }
 
-            return View(userModel);
+            return View(orderModel);
         }
 
-        // POST: User/Delete/5
+        // POST: Order/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var userModel = await _context.UserData.FindAsync(id);
-            _context.UserData.Remove(userModel);
+            var orderModel = await _context.OrderData.FindAsync(id);
+            _context.OrderData.Remove(orderModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserModelExists(string id)
+        private bool OrderModelExists(string id)
         {
-            return _context.UserData.Any(e => e.UserID == id);
+            return _context.OrderData.Any(e => e.OrderID == id);
         }
     }
 }
