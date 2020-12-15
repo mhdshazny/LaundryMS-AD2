@@ -14,10 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderID)
+                @Html.DisplayNameFor(model => model.OrderRefID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrdPrID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdPkgUP)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrdPrQty)
@@ -39,10 +42,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OrderID)
+                    @Html.DisplayFor(modelItem => item.OrderRefID)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrdPrID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrdPkgUP)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrdPrQty)

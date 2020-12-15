@@ -43,9 +43,43 @@ namespace LaundryMS_AD2.Controllers
         }
 
         // GET: Order/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            //PreDefined Values
+            //LoggedIn User from Session
+            var User = "CUS0000002";
+            ViewBag.User = "USER000001";
+            ViewBag.Customer = User;
+                
+            //New Reference ID Generation or selecting suitable
+            var WaitingOrdList = await _context.OrderListData
+                                         .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                                         .FirstOrDefaultAsync();
+            ViewBag.ReferenceID = WaitingOrdList.OrderRefID.ToString();
+
+            //New OrderID for Checkout
+
+            ViewBag.NewID = NewId();
+
+
             return View();
+        }
+        public async Task<string>  NewId()
+        {
+            string Id = await _context.OrderData
+                   .MaxAsync(i => i.OrderID);
+            string NewID = "ORD0000001";
+            int num;
+            if (Id != null)
+            {
+                num = int.Parse(Id.Substring(3, 7)) + 1;
+                NewID = "ORD" + num.ToString().PadLeft(7, '0');
+                ViewBag.NewID = NewID.ToString();
+
+                return NewID;
+            }
+            return NewID;
+
         }
 
         // POST: Order/Create
@@ -53,7 +87,7 @@ namespace LaundryMS_AD2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus")] OrderModel orderModel)
+        public async Task<IActionResult> Create([Bind("OrderID,OrderRefNo,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus,OrderPaymentStatus")] OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +119,7 @@ namespace LaundryMS_AD2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("OrderID,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus")] OrderModel orderModel)
+        public async Task<IActionResult> Edit(string id, [Bind("OrderID,OrderRefNo,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus,OrderPaymentStatus")] OrderModel orderModel)
         {
             if (id != orderModel.OrderID)
             {

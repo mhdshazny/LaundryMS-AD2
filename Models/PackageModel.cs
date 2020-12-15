@@ -25,7 +25,7 @@ namespace LaundryMS_AD2.Models
         
         [Required(ErrorMessage ="Package Needs a Price value.")]
         [DisplayName("Package Price")]
-        public float PkgPrice { get; set; }
+        public decimal PkgPrice { get; set; }
         
         [Required(ErrorMessage ="Package status required.")]
         [DisplayName("Package Status")]

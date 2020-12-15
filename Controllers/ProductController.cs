@@ -43,8 +43,28 @@ namespace LaundryMS_AD2.Controllers
         }
 
         // GET: Product/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            //Product Type List
+            List<PrTypeModel> PrTypes = _context.PrTypeData.ToList();
+            ViewBag.PrType = new SelectList(PrTypes, "PrTypeID", "PrType");
+
+            //New ID
+            string NewID = "PROD000001";
+            var Id = await _context.ProductData
+                            .MaxAsync(i => i.PrID);
+            int num;
+            if (Id != null)
+            {
+                num = int.Parse(Id.Substring(4, 6)) + 1;
+                NewID = "PROD" + num.ToString().PadLeft(6, '0');
+                ViewBag.NewID = NewID.ToString();
+
+                return View();
+            }
+
+            ViewBag.NewID = NewID.ToString();
+
             return View();
         }
 

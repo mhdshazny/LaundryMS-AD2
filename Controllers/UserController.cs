@@ -43,19 +43,27 @@ namespace LaundryMS_AD2.Controllers
         }
 
         // GET: User/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            //New ID
-            var Id = _context.UserData
-                            .Max(i => i.UserID)
-                            .ToString();
-            int num = int.Parse(Id.Substring(4, 6)) + 1;
-            string NewID = "USER" + num.ToString().PadLeft(6, '0');
-            ViewBag.NewID = NewID.ToString();
-
             //Role List
             List<EmpRoleModel> Role = _context.EmpRoleData.ToList();
             ViewBag.Roles = new SelectList(Role, "EmpRoleID", "EmpRole");
+            //New ID
+            var Id = await _context.UserData
+                            .MaxAsync(i => i.UserID);
+            string NewID = "CUS0000001";
+            int num;
+            if (Id != null)
+            {
+                num = int.Parse(Id.Substring(4, 6)) + 1;
+                NewID = "USER" + num.ToString().PadLeft(6, '0');
+                ViewBag.NewID = NewID.ToString();
+
+                return View();
+            }
+
+            ViewBag.NewID = NewID.ToString();
+
 
 
             return View();

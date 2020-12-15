@@ -21,6 +21,8 @@ namespace LaundryMS_AD2.Controllers
         // GET: OrderList
         public async Task<IActionResult> Index()
         {
+         
+
             return View(await _context.OrderListData.ToListAsync());
         }
 
@@ -45,6 +47,14 @@ namespace LaundryMS_AD2.Controllers
         // GET: OrderList/Create
         public IActionResult Create()
         {
+            //Products List
+            List<ProductModel> Products = _context.ProductData.ToList();
+            ViewBag.OrdProducts = new SelectList(Products, "PrID", "PrName");
+            //Package List
+            List<PackageModel> Packages = _context.PackageData.ToList();
+            ViewBag.OrdPkg = new SelectList(Packages, "PkgID", "PkgName");
+            ViewBag.PkgList = new SelectList(Packages,"PkgID","PkgPrice","PkgPrice");
+
             return View();
         }
 
@@ -53,7 +63,7 @@ namespace LaundryMS_AD2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrdListID,OrderID,OrdPrID,OrdPrQty,OrdPrAmnt,OrdPkg,OrdListStatus")] OrderListModel orderListModel)
+        public async Task<IActionResult> Create([Bind("OrdListID,OrderRefID,OrdPrID,OrdPrQty,OrdPrAmnt,OrdPkg,OrdPkgUP,OrdListStatus")] OrderListModel orderListModel)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +95,7 @@ namespace LaundryMS_AD2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrdListID,OrderID,OrdPrID,OrdPrQty,OrdPrAmnt,OrdPkg,OrdListStatus")] OrderListModel orderListModel)
+        public async Task<IActionResult> Edit(int id, [Bind("OrdListID,OrderRefID,OrdPrID,OrdPrQty,OrdPrAmnt,OrdPkg,OrdPkgUP,OrdListStatus")] OrderListModel orderListModel)
         {
             if (id != orderListModel.OrdListID)
             {

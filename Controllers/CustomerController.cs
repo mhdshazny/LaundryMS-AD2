@@ -44,12 +44,11 @@ namespace LaundryMS_AD2.Controllers
         }
 
         // GET: Customer/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             //New ID
-            var Id = _context.CustomerData
-                            .Max(i => i.CusID)
-                            .ToString();
+            var Id = await _context.CustomerData
+                            .MaxAsync(i => i.CusID);
             string NewID ="CUS0000001";
             int num;
             if (Id != null)
