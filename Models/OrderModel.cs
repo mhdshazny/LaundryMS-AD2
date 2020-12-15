@@ -15,11 +15,15 @@ namespace LaundryMS_AD2.Models
         [DisplayName("Order ID")]
         public string OrderID { get; set; }
 
+        [Required(ErrorMessage ="Privede the relevant order reference number.")]
+        [DisplayName("Order Reference ID")]
+        public string OrderRefNo{ get; set; }
+
         [Required(ErrorMessage ="Provide Customer ID")]
         [DisplayName("Customer ID")]
         public string OrderCusID { get; set; }
 
-        [DisplayName("Customer ID")]
+        [DisplayName("Confirmed User")]
         public string OrderApprvdBy { get; set; }
 
         [Required]
@@ -28,7 +32,7 @@ namespace LaundryMS_AD2.Models
 
         [Required(ErrorMessage = "Provide Total Amount")]
         [DisplayName("Total Amount")]
-        public float OrderTotAmnt { get; set; }
+        public decimal OrderTotAmnt { get; set; }
 
         [Required(ErrorMessage = "Provide Customer ID")]
         [DisplayName("Ordered Date")]
@@ -37,7 +41,7 @@ namespace LaundryMS_AD2.Models
 
         [Required(ErrorMessage = "Provide a Delivery Date")]
         [DisplayName("Delivery Date")]
-        public string OrderDelivery { get; set; }
+        public DateTime OrderDelivery { get; set; }
 
         [DisplayName("Order Delivery Address")]
         [DataType(DataType.MultilineText)]
@@ -50,6 +54,10 @@ namespace LaundryMS_AD2.Models
         [Required(ErrorMessage ="Provide the current order status.")]
         [DisplayName("Order Status")]
         public string OrderStatus { get; set; }
+
+        [Required(ErrorMessage ="Provide the current order payment status.")]
+        [DisplayName("Order Payment Status")]
+        public string OrderPaymentStatus { get; set; }
 
     }
 }

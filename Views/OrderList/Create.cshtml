@@ -14,30 +14,41 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="OrderID" class="control-label"></label>
-                <input asp-for="OrderID" class="form-control" />
-                <span asp-validation-for="OrderID" class="text-danger"></span>
+                <label asp-for="OrderRefID" class="control-label"></label>
+                <input asp-for="OrderRefID" class="form-control" />
+                <span asp-validation-for="OrderRefID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OrdPrID" class="control-label"></label>
-                <input asp-for="OrdPrID" class="form-control" />
+                @Html.DropDownListFor(model => model.OrdPrID, ViewBag.OrdProducts as SelectList, "--Select a Product--", new { @class = "form-control" })
                 <span asp-validation-for="OrdPrID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OrdPrQty" class="control-label"></label>
-                <input asp-for="OrdPrQty" class="form-control" />
+                <input asp-for="OrdPrQty" id="OrdQty" class="form-control" />
                 <span asp-validation-for="OrdPrQty" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OrdPrAmnt" class="control-label"></label>
-                <input asp-for="OrdPrAmnt" class="form-control" />
-                <span asp-validation-for="OrdPrAmnt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="OrdPkg" class="control-label"></label>
-                <input asp-for="OrdPkg" class="form-control" />
+                @Html.DropDownListFor(model => model.OrdPkg, ViewBag.OrdPkg as SelectList, "--Select a Package--", new { @class = "form-control" })
                 <span asp-validation-for="OrdPkg" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="OrdPkgUP" class="control-label"></label>
+                <input asp-for="OrdPkgUP" id="PkgUP" class="form-control" />
+                <span asp-validation-for="OrdPkgUP" class="text-danger"></span>
+            </div>
+            <div class="col form-group">
+                <div class="float-right">
+                    <input type="button" value="Update" id="CalAmnt" class="btn btn-success" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrdPrAmnt" class="control-label"></label>
+                <input asp-for="OrdPrAmnt" id="TotAmnt" class="form-control" />
+                <span asp-validation-for="OrdPrAmnt" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="OrdListStatus" class="control-label"></label>
                 <input asp-for="OrdListStatus" class="form-control" />
@@ -57,3 +68,43 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    $(document).ready(function () {
+        $('#PkgUP').val("0");
+        $('#OrdQty').val("0");
+        $('#TotAmnt').val("0");
+
+        $('#CalAmnt').click(function Calc() {
+            CalTot();
+        });
+
+
+        function CalTot() {
+            var PkgPrice = parseInt($('#PkgUP').val());
+            var OrdQty = parseInt($('#OrdQty').val());
+
+            if (PkgPrice.val === 0) {
+                alert("Please Provide Package Price (Currently - 0)")
+            }
+            if (OrdQty.val === 0) {
+                alert("Please Provide Order Quantity (Currently - 0)")
+            }
+            var NewTotAmnt = PkgPrice * OrdQty;
+            $('#TotAmnt').val(NewTotAmnt.toString());
+        }
+
+        $('#OrdPkg').change(function Calc() {
+            var PkgID = $('#OrdPkg').val();
+            var PkgArray = @Html.Raw(Json.Serialize(ViewBag.PkgList));
+            var SelectPkg;
+            let Pkg = PkgArray.filter(function (e) {
+                //return 
+                SelectPkg = PkgArray.find(({ value }) => value === PkgID);
+            });
+            var PkgPrice = SelectPkg.text;
+            $('#PkgUP').val(PkgPrice);
+
+        });
+
+    });
+</script>
