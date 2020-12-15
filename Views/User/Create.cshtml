@@ -10,7 +10,6 @@
 <h4>UserModel</h4>
 <hr />
 <div class="container-fluid">
-    <div class="">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -163,7 +162,7 @@
                         <label asp-for="Password" class="col-md-2 col-form-label col-form-label-md"></label>
 
                         <div class="col-10">
-                            <input asp-for="Password" class="form-control" />
+                            <input asp-for="Password" id="Password2" class="form-control" />
                             <div class="form-check-inline pl-2">
                                 <input type="checkbox" class="form-check-input" id="PassVisible">
                                 <label class="form-check-label">Password visible</label>
@@ -209,7 +208,6 @@
                 </div>
             </div>
         </form>
-    </div>
 </div>
 
 
