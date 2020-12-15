@@ -57,7 +57,7 @@
 </head>
 <body class="sidebar-mini layout-fixed" style="height:auto">
     <div class="wrapper">
-        <nav class="main-header navbar navbar-expand-lg navbar-dark" style="background-color: #222d32">
+        <nav class="main-header navbar navbar-expand navbar-dark" style="background-color: #222d32">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -70,25 +70,51 @@
                 </li>
 
             </ul>
-            <ul class="navbar-nav mr-1" >
-                <li class="text-right text-light">
-                    <div class="dropdown" style="background-color: #222d32">
-                        <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                            User Email
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" asp-action="Edit" asp-controller="User" asp-route-data="UserID">Edit User Profile</a>
-                            <a class="dropdown-item" href="#">Report Issues</a>
-                            <a class="dropdown-item" asp-action="Login" asp-controller="Identity">Logout</a>
+            @*<ul class="navbar-nav mr-1" >
+                    <li class="text-right text-light">
+                        <div class="dropdown" style="background-color: #222d32">
+                            <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                User Email
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-action="Edit" asp-controller="User" asp-route-data="UserID">Edit User Profile</a>
+                                <a class="dropdown-item" href="#">Report Issues</a>
+                                <a class="dropdown-item" asp-action="Login" asp-controller="Identity">Logout</a>
+                            </div>
                         </div>
-                    </div>                
-                </li>
-            </ul>
+                    </li>
+                </ul>*@
+            <ul class="navbar-nav mr-1">
 
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user"></i>
+                        <i class="card-header text-light">User Email</i>
+                        @*<span class="badge badge-warning navbar-badge">15</span>*@
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                        <span class="dropdown-item dropdown-header">User Options</span>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i>User Profile
+                            <span class="float-right fa fa-check"></span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a asp-action="Login" asp-controller="Identity" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Log Out
+                            <span class="float-right text-muted text-sm"></span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">Laundry MS V-1.0</a>
+                    </div>
+                </li>
+
+            </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #222d32">
 
-            <div class="container-fluid">
+            <div class="">
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2 center text-light">
@@ -96,7 +122,7 @@
                         <div class="user-panel">
                             <a asp-action="Projects" asp-controller="Admin" class="brand-link">
                                 @*<span class="center">Institute MS</span>*@
-                                <p class=" text-center">Institute MS - V 1.0</p>
+                                <p class=" text-center">Laundry MS - V 1.0</p>
                             </a>
                         </div>
                         <!-- Sidebar user panel (optional) -->
@@ -106,212 +132,243 @@
                             </div>
                             <div class="info">
                                 <a asp-action="Details" asp-controller="User" asp-route-id="" id="SessionLoad" class="d-block text-white-50">
-                                    IMS-SystemUser
+                                    Laundry MS V-1.0
                                 </a>
                             </div>
                         </div>
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-        with font-awesome or any other icon font library -->
-                            @* Dashboard *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="Home" asp-action="Index" class="nav-link text-light">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Dashboard
-                                        @*<i class="right fas fa-angle-left"></i>*@
-                                    </p>
-                                </a>
-                            </li>
+                        <div class="container">
+                            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                                <!-- Add icons to the links using the .nav-icon class
+                                with font-awesome or any other icon font library -->
+                                @* Dashboard *@
+                                <li class="nav-item has-treeview">
+                                    <a asp-controller="Home" asp-action="Index" class="nav-link text-light">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Dashboard
+                                            @*<i class="right fas fa-angle-left"></i>*@
+                                        </p>
+                                    </a>
+                                </li>
 
-                            @* User *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="User" asp-action="Create" class="nav-link text-light">
-                                    <i class="nav-icon fas fa-user"></i>
-                                    <p>
-                                        User Options
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="User" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>View Users</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="User" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Create User Account</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="User" asp-action="UserReport" target="_blank" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Generate User Report</p>
-                                        </a>
-                                    </li>
+                                @* User *@
+                                <li class="nav-item has-treeview">
+                                    <a asp-controller="User" asp-action="Create" class="nav-link text-light">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>
+                                            User Options
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="User" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>View Users</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="User" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Create User Account</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="User" asp-action="UserReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Generate User Report</p>
+                                            </a>
+                                        </li>
 
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>User Issues</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>User Issues</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            @* Project *@
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link text-light">
-                                    <i class="nav-icon fas fa-cogs"></i>
-                                    <p>
-                                        Customer Options
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="Customer" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Manage Customers</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Customer" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Add a Customer Acc</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Customer" asp-action="CustomerReport" target="_blank" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Customer Report</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="fa fa-info-circle nav-icon ml-2"></i>
-                                            <p>Customer Issues</p>
-                                        </a>
-                                    </li>
+                                @* Project *@
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link text-light">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>
+                                            Customer Options
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="Customer" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Manage Customers</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Customer" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Add a Customer Acc</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Customer" asp-action="CustomerReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Customer Report</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="fa fa-info-circle nav-icon ml-2"></i>
+                                                <p>Customer Issues</p>
+                                            </a>
+                                        </li>
 
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
 
 
-                            @* Empployee Efficiency *@
-                            <li class="nav-item has-treeview">
-                                <a asp-controller="#" asp-action="#" class="nav-link text-light">
-                                    <i class="nav-icon fas fa-user-plus"></i>
-                                    <p>
-                                        Product Options
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="Product" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="nav-icon fa fa-percent ml-2"></i>
-                                            <p>Manage Products</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Product" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Add a Product</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-2"></i>
-                                            <p>Product Issues</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            @* Tasks *@
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link text-light">
-                                    <i class="nav-icon fas fa-tasks"></i>
-                                    <p>
-                                        Order Options
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="Order" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>View Orders</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Order" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Create an Order</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="OrderList" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>View Order List</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Order" asp-action="OrderReport" target="_blank" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Order Report</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                @* Empployee Efficiency *@
+                                <li class="nav-item has-treeview">
+                                    <a asp-controller="#" asp-action="#" class="nav-link text-light">
+                                        <i class="nav-icon fas fa-tshirt"></i>
+                                        <p>
+                                            Product Options
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="Product" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="nav-icon fa fa-percent ml-2"></i>
+                                                <p>Manage Products</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Product" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Add a Product</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-2"></i>
+                                                <p>Product Issues</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @* Tasks *@
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link text-light">
+                                        <i class="nav-icon fas fa-shopping-cart"></i>
+                                        <p>
+                                            Order Options
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="Order" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>View Orders</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Order" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Create an Order</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="OrderList" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>View Order List</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Order" asp-action="OrderReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Order Report</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            @* Bugs *@
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link text-light">
-                                    <i class="nav-icon fas fa-bug"></i>
-                                    <p>
-                                        Package Options
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>View Packages</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Create a Package</p>
-                                        </a>
-                                    </li>
+                                @* Bugs *@
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link text-light ">
+                                        <i class="nav-icon fas fa-box-open"></i>
+                                        <p>
+                                            Package Options
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>View Packages</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Create a Package</p>
+                                            </a>
+                                        </li>
 
-                                    <li class="nav-item">
-                                        <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                            <i class="far fa-circle nav-icon ml-3"></i>
-                                            <p>Package Issues</p>
-                                        </a>
-                                    </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Package Issues</p>
+                                            </a>
+                                        </li>
 
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
+                                @* Bugs *@
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link text-light">
+                                        <i class="nav-icon fas fa-cash-register"></i>
+                                        <p>
+                                            Payment Options
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>View Packages</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Create a Package</p>
+                                            </a>
+                                        </li>
 
-                        </ul>
-                        <ul class="navbar-brand" style="position:absolute; left:0; bottom:0; ">
-                            <li>
-                                <span class="date-time-span">
-                                    <time datetime="hh:mm">@DateTime.Now.ToString()</time>
-                                </span>
-                            </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                <i class="far fa-circle nav-icon ml-3"></i>
+                                                <p>Package Issues</p>
+                                            </a>
+                                        </li>
 
-                        </ul>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>                        <div class="navbar-brand" style="position:absolute; left:10%; bottom:0;">
+                            <span class="date-time-span">
+                                <time datetime="hh:mm">@DateTime.Now.ToString("dddd, MMM - yyyy")</time>
+                            </span>
+
+                        </div>
                     </div>
-                    
+
 
 
                 </nav>
@@ -369,8 +426,26 @@
 
 
     <!--</script>-->
+<script>
+    $(document).ready(function () {
+        $('.navbar-collapse a').click(function () {
+            $(".navbar-collapse").collapse('hide');
 
-    <script>
+        });
+
+
+        $('#PassVisible').click(function PassVisible() {
+            var x = document.getElementById("Password");
+            var y = document.getElementById("Password2");
+            if (x.type === "password") {
+                x.type = "text";
+                y.type = "text";
+            } else {
+                x.type = "password";
+                y.type = "password";
+            }
+        });
+
         function UserReport() {
             window.open(
                 //asp - controller="User" asp - action="UserReport"
@@ -381,15 +456,11 @@
                 //asp - controller="User" asp - action="UserReport"
                 "Issues/IssuesReport", "_blank");
         }
-    </script>
+
+    });
 
 
-    @*<script src="~/plugins/datatables/js/jquery.dataTables.min.js"></script>
-        <script src="~/plugins/jquery/jquery.min.js"></script>
-
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
-    @*<script src="external/jquery/jquery.js"></script>
-        <script src="jquery-ui.min.js"></script>*@
+</script>
 
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

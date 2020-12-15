@@ -46,7 +46,23 @@ namespace LaundryMS_AD2.Controllers
         // GET: Customer/Create
         public IActionResult Create()
         {
+            //New ID
+            var Id = _context.CustomerData
+                            .Max(i => i.CusID)
+                            .ToString();
+            string NewID ="CUS0000001";
+            int num;
+            if (Id != null)
+            {
+                num = int.Parse(Id.Substring(3, 7)) + 1;
+                NewID = "CUS" + num.ToString().PadLeft(7, '0');
+                ViewBag.NewID = NewID.ToString();
+
+                return View();
+            }
+            ViewBag.NewID = NewID.ToString();
             return View();
+
         }
 
         // POST: Customer/Create
@@ -54,7 +70,7 @@ namespace LaundryMS_AD2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CusID,CusfName,CuslName,CusNIC,CusAddress,CusContact,CusEmail,CusPassw,CusStatus")] CustomerModel customerModel)
+        public async Task<IActionResult> Create([Bind("CusID,CusfName,CuslName,CusNIC,CusGender,CusAddress,CusContact,CusEmail,CusPassw,CusStatus")] CustomerModel customerModel)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +103,7 @@ namespace LaundryMS_AD2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CusID,CusfName,CuslName,CusNIC,CusAddress,CusContact,CusEmail,CusPassw,CusStatus")] CustomerModel customerModel)
+        public async Task<IActionResult> Edit(string id, [Bind("CusID,CusfName,CuslName,CusNIC,CusGender,CusAddress,CusContact,CusEmail,CusPassw,CusStatus")] CustomerModel customerModel)
         {
             if (id != customerModel.CusID)
             {

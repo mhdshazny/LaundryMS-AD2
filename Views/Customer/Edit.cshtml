@@ -30,6 +30,15 @@
                 <span asp-validation-for="CusNIC" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CusGender" class="control-label"></label>
+                <select asp-for="CusGender" class="form-control">
+                    <option value="">--Select Customer Gender--</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>                
+                <span asp-validation-for="CusGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CusAddress" class="control-label"></label>
                 <textarea asp-for="CusAddress" class="form-control"></textarea>
                 <span asp-validation-for="CusAddress" class="text-danger"></span>
@@ -46,12 +55,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="CusPassw" class="control-label"></label>
-                <input asp-for="CusPassw" class="form-control" value="@ViewBag.Passw"/>
-                <span asp-validation-for="CusPassw" class="text-danger"></span>
+                    <input asp-for="CusPassw" id="Password" value="@ViewBag.Passw"  class="form-control" />
+                    <div class="form-check-inline pl-2">
+                        <input type="checkbox" class="form-check-input" id="PassVisible">
+                        <label class="form-check-label">Password visible</label>
+                    </div>
+                    <span asp-validation-for="CusPassw" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CusStatus" class="control-label"></label>
-                <input asp-for="CusStatus" class="form-control" />
+                <select asp-for="CusStatus" class="form-control">
+                    <option value="">--Select Customer Status--</option>
+                    <option value="Active">Active</option>
+                    <option value="InActive">InActive</option>
+                </select>
                 <span asp-validation-for="CusStatus" class="text-danger"></span>
             </div>
             <div class="form-group">

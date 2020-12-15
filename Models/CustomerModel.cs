@@ -16,16 +16,20 @@ namespace LaundryMS_AD2.Models
         public string CusID { get; set; }
 
         [Required(ErrorMessage ="Please provide a proper Name.")]
-        [DisplayName("Customer First Name")]
+        [DisplayName("First Name")]
         public string CusfName { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper Name.")]
-        [DisplayName("Customer Last Name")]
+        [DisplayName("Last Name")]
         public string CuslName { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper NIC Number.")]
         [DisplayName("Customer NIC")]
         public string CusNIC { get; set; }
+
+        [Required(ErrorMessage = "Please provide a proper Gender.")]
+        [DisplayName("Customer Gender")]
+        public string CusGender { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper Address.")]
         [DataType(DataType.MultilineText)]
@@ -33,8 +37,8 @@ namespace LaundryMS_AD2.Models
         public string CusAddress { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper Contact No.")]
-        [DisplayName("Customer Contact No.")]
-        public int CusContact { get; set; }
+        [DisplayName("Contact No.")]
+        public string CusContact { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper Email")]
         [DataType(DataType.EmailAddress)]
@@ -42,11 +46,12 @@ namespace LaundryMS_AD2.Models
         public string CusEmail { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper Password")]
-        [DisplayName("Customer Password")]
+        [DisplayName("Password")]
+        [DataType(DataType.Password)]
         public string CusPassw { get; set; }
 
         [Required(ErrorMessage = "Please provide a proper Customer Status")]
-        [DisplayName("Customer Status")]
+        [DisplayName("Status")]
         public string CusStatus { get; set; }
     }
 }

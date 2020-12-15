@@ -75,7 +75,7 @@
         <div class="col">
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
+                <textarea asp-for="Address" class="form-control"></textarea>
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
         </div>
@@ -101,19 +101,24 @@
     <div class="form-row">
         <div class="col">
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="Password" class="form-control-label"></label>
+
+                <div class="form-group">
+                    <div class="col form-check-inline">
+                        <input asp-for="Password" class="form-control" value="@ViewBag.Passw" />
+                    </div>
+                   
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
             </div>
         </div>
         <div class="col">
-
             <div class="form-group">
                 <label asp-for="Password" class="form-control-label"></label>
 
                 <div class="form-group">
                     <div class="col-10 form-check-inline">
-                        <input asp-for="Password" class="form-control" value="@ViewBag.Passw" />
+                        <input asp-for="Password" class="form-control" id="Password2" value="@ViewBag.Passw" />
                     </div>
                     <div class="col-1 form-check-inline">
                         <input type="checkbox" class="form-check-input" id="PassVisible">
@@ -122,20 +127,23 @@
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="form-row">
-        <div class="col-6">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
                 <input asp-for="Status" class="form-control" />
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
-
         </div>
-
+        <div class="col">
+            <div class="form-group">
+            
+            </div>
+        </div>
     </div>
+   
     <hr />
 
     <div class="form-row pb-3">
@@ -157,14 +165,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#PassVisible').click(function PassVisible() {
-            var x = document.getElementById("Password");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        });
+
     });
 
 </script>
