@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LaundryMS_AD2.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace LaundryMS_AD2.Controllers
 {
@@ -45,17 +46,57 @@ namespace LaundryMS_AD2.Controllers
         }
 
         // GET: OrderList/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var User = HttpContext.Session.GetString("SessionCusID");
+            if (User == null)
+            {
+                RedirectToAction("Login", "CustomerLogin");
+            }
+
             //Products List
             List<ProductModel> Products = _context.ProductData.ToList();
             ViewBag.OrdProducts = new SelectList(Products, "PrID", "PrName");
             //Package List
             List<PackageModel> Packages = _context.PackageData.ToList();
             ViewBag.OrdPkg = new SelectList(Packages, "PkgID", "PkgName");
-            ViewBag.PkgList = new SelectList(Packages,"PkgID","PkgPrice","PkgPrice");
+            ViewBag.PkgList = new SelectList(Packages, "PkgID", "PkgPrice", "PkgPrice");
+
+            //New Reference ID Generation or selecting suitable
+
+            var WaitingOrdList = await _context.OrderListData
+                                         .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                                         .FirstOrDefaultAsync();
+
+
+            if (WaitingOrdList == null)
+            {
+                var NewWaitingOrdList = await _context.OrderListData
+                             .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                             .FirstOrDefaultAsync();
+                int num;
+                if (NewWaitingOrdList != null)
+                {
+                    var NewRefID = NewWaitingOrdList.OrderRefID.Max().ToString();
+
+                    num = int.Parse(NewRefID.Substring(13, 3)) + 1;
+                    var NewRefId = User.ToString() + "ORD" + num.ToString().PadLeft(3, '0');
+                    ViewBag.ReferenceID = NewRefId.ToString();
+                    return View();
+
+                }
+                else
+                {
+                    ViewBag.ReferenceID = User.ToString() + "ORD001";
+         
+                    return View();
+                }
+
+            }
+            ViewBag.ReferenceID = WaitingOrdList.OrderRefID.ToString();
 
             return View();
+
         }
 
         // POST: OrderList/Create
