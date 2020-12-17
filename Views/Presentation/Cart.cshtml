@@ -1,0 +1,174 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
+@*@model LaundryMS_AD2.Models.OrderListModel;*@
+
+@{
+    Layout = "~/Views/Shared/_Presentation_Layout.cshtml";
+}
+<div class="container">
+    <div class="review-payment">
+        <h2>&nbsp;Review Cart</h2>
+    </div>
+
+    <div class="table-responsive cart_info">
+        <table class="table table-condensed">
+            <thead>
+                <tr class="cart_menu">
+                    <td class="image">Item</td>
+                    <td class="description">Product</td>
+                    <td class="price">Price</td>
+                    <td>Quantity</td>
+                    <td class="quantity">Action</td>
+                    <td class="total">Total</td>
+                    <td></td>+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="cart_product">
+                            <a href=""><img src="images/cart/one.png" alt=""></a>
+                        </td>
+                        <td class="cart_description">
+                            <h4><a href="">@item.OrdPrID</a></h4>
+                            <p>Product ID: @item.OrdPrID</p>
+                        </td>
+                        <td class="cart_price">
+                            <p>@item.OrdPkgUP</p>
+                        </td>
+                        <td class="cart_quantity">
+                            <div class="cart_quantity_button">
+                                @*<a class="cart_quantity_up buttons" onclick="AddOne()"> + </a>*@
+                                @*<input type="number" onchange="CalTot()" class="cart_quantity_input" value="@item.OrdPrQty" autocomplete="off" size="2">*@
+                                @*<input asp-for="@item.OrdPrQty" onchange="ChangeQty()" />*@
+                                @*<a class="cart_quantity_down" onclick="AddOne()"> - </a>*@
+                                    <a href="@Url.Action("AddOneToCart","Presentation",new { OrderRefID = item.OrderRefID, OrderQty = item.OrdPrQty})" >+</a>
+                                <input asp-for="@item.OrdPrQty" />
+
+                                    <button type="submit" id="btnSub">-</button>
+
+                                    @*<button type="button" onclick="proceed()" id="@item.OrderRefID" >Update</button>*@
+                            </div>
+                        </td>
+                        <td class="cart_total">
+                            @*<form action="/" method="post">*@
+                            @*<button type="submit" href="@Url.Action("AddToCart","Presentation",new { OrderRefID = item.OrderRefID, OrderQty = item.OrdPrQty})">Update</button>*@
+                            @*</form>*@
+
+                        </td>
+                        <td class="cart_total">
+                            <p class="cart_total_price">@item.OrdPrAmnt</p>
+                        </td>
+                        <td class="cart_delete">
+                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4">&nbsp;</td>
+                    <td colspan="2">
+                        <table class="table table-condensed total-result">
+                            <tr>
+                                <td>Cart Sub Total</td>
+                                <td>$59</td>
+                            </tr>
+                            <tr>
+                                <td>Exo Tax</td>
+                                <td>$2</td>
+                            </tr>
+                            <tr class="shipping-cost">
+                                <td>Shipping Cost</td>
+                                <td>Free</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td><span>$61</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <hr />
+
+</div>
+
+
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free E-Commerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>100% Responsive Design</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free Ecommerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function proceed(id) {
+        var form = document.createElement('form');
+        form.setAttribute('action', 'AddOneToCart')
+        form.setAttribute('method', 'post')
+        form.setAttribute('asp-route-id',id)
+        document.body.appendChild(form)
+        form.submit();
+    }
+</script>  

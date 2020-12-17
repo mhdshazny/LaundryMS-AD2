@@ -1,0 +1,39 @@
+﻿@model OrderListModel
+
+    <div class="modal fade" id="AddToCart">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="exampleModalLabel">Add To Cart</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="Create">
+                        <div class="form-group">
+                            <label asp-for="OrdPrID"></label>
+                            <input asp-for="OrdPrID" class="form-control"/>
+                            <span asp-validation-for="OrdPrID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="OrdPrQty"></label>
+                            <input asp-for="OrdPrQty" class="form-control"/>
+                            <span asp-validation-for="OrdPrQty" class="text-danger"></span>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" data-save="modal">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

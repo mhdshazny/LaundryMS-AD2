@@ -57,29 +57,43 @@ namespace LaundryMS_AD2.Controllers
                                          .FirstOrDefaultAsync();
             ViewBag.ReferenceID = WaitingOrdList.OrderRefID.ToString();
 
+            //Tot Amnt For Payment
+            var WaitingOrdList2 = await _context.OrderListData
+                             .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                             .ToListAsync();
+            ViewBag.TotAmnt = WaitingOrdList2.Sum(i => i.OrdPrAmnt).ToString();
+
+            //Tot Quantity of Products
+            ViewBag.PrQty = WaitingOrdList2.Sum(i => i.OrdPrQty).ToString();
+
             //New OrderID for Checkout
-
             ViewBag.NewID = NewId();
-
 
             return View();
         }
         public async Task<string>  NewId()
         {
-            string Id = await _context.OrderData
-                   .MaxAsync(i => i.OrderID);
             string NewID = "ORD0000001";
-            int num;
-            if (Id != null)
+
+            try
             {
-                num = int.Parse(Id.Substring(3, 7)) + 1;
-                NewID = "ORD" + num.ToString().PadLeft(7, '0');
-                ViewBag.NewID = NewID.ToString();
+                string Id = await _context.OrderData
+                       .MaxAsync(i => i.OrderID);
+                int num;
+                if (Id != null)
+                {
+                    num = int.Parse(Id.Substring(3, 7)) + 1;
+                    NewID = "ORD" + num.ToString().PadLeft(7, '0');
+                    ViewBag.NewID = NewID.ToString();
 
-                return NewID;
+                    return NewID;
+                }
             }
-            return NewID;
-
+            catch (Exception err)
+            {
+                throw err;
+            }
+                return NewID;
         }
 
         // POST: Order/Create

@@ -22,6 +22,7 @@ namespace LaundryMS_AD2.Models
         public DbSet<PrTypeModel> PrTypeData { get; set; }
         public DbSet<OrderModel> OrderData { get; set; }
         public DbSet<OrderListModel> OrderListData { get; set; }
+        public DbSet<OrderListDataLibraryModel> OrdListDL { get; set; }
         public DbSet<PackageModel> PackageData { get; set; }
         public DbSet<EmpRoleModel> EmpRoleData { get; set; }
 

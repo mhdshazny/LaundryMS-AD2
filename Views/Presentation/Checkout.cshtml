@@ -1,0 +1,252 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
+@{ Layout = "~/Views/Shared/_Presentation_Layout.cshtml"; }
+
+
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Check out</li>
+            </ol>
+        </div><!--/breadcrums-->
+
+        <div class="step-one">
+            <h2 class="heading">Ordering Process</h2>
+        </div>
+
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="bill-to">
+                        <p>&nbsp; Bill To</p>
+                        <br />
+                        <div class="shopper-info">
+                            <form>
+                                <input type="text" placeholder="Customer ID" value="@ViewBag.CusID">
+                                <input type="text" placeholder="Customer Name" value="@ViewBag.CusName">
+                                <input type="text" placeholder="Email*" value="@ViewBag.CusEmail">
+                                <input type="text" placeholder="Address 1 *" value="@ViewBag.CusAddress">
+                                <input type="text" placeholder="Phone *" value="@ViewBag.CusPhone">
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="order-message">
+                        <p>Shipping Order</p>
+                        <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                        <label><input type="checkbox"> Shipping to bill address</label>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+        </div>
+        <div class="review-payment">
+            <h2>&nbsp;Review Cart</h2>
+        </div>
+
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="cart_product">
+                                <a href=""><img src="images/cart/one.png" alt=""></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">@item.OrdPrID</a></h4>
+                                <p>Product ID: @item.OrdPrID</p>
+                            </td>
+                            <td class="cart_price">
+                                <p id="Price">@item.OrdPkgUP</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <a class="cart_quantity_up buttons" onclick="AddOne()"> + </a>
+                                    <input type="number" onchange="CalTot()" class="cart_quantity_input" data-OrdID="@item.OrdPrID" data-price="@item.OrdPkgUP" value="@item.OrdPrQty" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down" onclick="AddOne()"> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">@item.OrdPrAmnt</p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2">
+                            <table class="table table-condensed total-result">
+                                <tr>
+                                    <td>Cart Sub Total</td>
+                                    <td>$59</td>
+                                </tr>
+                                <tr>
+                                    <td>Exo Tax</td>
+                                    <td>$2</td>
+                                </tr>
+                                <tr class="shipping-cost">
+                                    <td>Shipping Cost</td>
+                                    <td>Free</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td><span>$61</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <hr />
+        <div class="review-payment">
+            <h2>&nbsp;Review & Payment</h2>
+        </div>
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="bill-to">
+                        <div class="shopper-info">
+                            <br />
+
+                            <div class="col-sm-3">
+                                <div class="shopper-info">
+                                    <form>
+                                        <p style="font-size:medium;margin-left:4%"> Delivery option</p>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="shopper-info">
+                                    <form>
+                                        <input type="text" placeholder="Customer ID" class="input" value="Cash on Delivery" readonly>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <p style="margin-left:2%">
+                                    <i class="fa fa-check m-2"></i>
+                                </p>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xl">
+                    <a class="btn btn-block btn-primary">Checkout</a>
+                    <a class="btn btn-block btn-primary">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> <!--/#cart_items-->
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free E-Commerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>100% Responsive Design</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free Ecommerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+
+<script>
+
+    function CalTot() {
+        var UP = $(this).data('price')
+        var OrdID = $(this).data('OrdID')
+        alert(UP)
+    }
+</script>
