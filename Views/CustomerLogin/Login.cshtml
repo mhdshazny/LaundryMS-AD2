@@ -1,0 +1,84 @@
+﻿@model LaundryMS_AD2.Models.CustomerModel;
+@{
+    Layout = "~/Views/Shared/_Presentation_Layout.cshtml";
+}
+
+<section id="advertisement">
+    <!--form-->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-5">
+                <h2>Login to your account</h2>
+                <br /><br />
+                <div class="login-form">
+                    <!--login form-->
+                    <form action="Verify" method="post">
+                        <input asp-for="CusEmail" placeholder="Email Address" />
+                        <span asp-validation-for="CusEmail" class="text-danger"></span>
+
+                        <input asp-for="CusPassw" placeholder="Password" />
+                        <span asp-validation-for="CusPassw" class="text-danger"></span>
+
+                        <span>
+                            <input type="checkbox" class="checkbox">
+                            Keep me signed in
+                        </span>
+                        <button type="submit" class="btn btn-default">Login</button>
+                    </form>
+                </div><!--/login form-->
+            </div>
+            <div class="col-sm-2">
+                <h2 class="or center-block">OR</h2>
+            </div>
+            <div class="col-sm-5">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>New User Signup!</h2>
+                    <form action="SignUP" method="post">
+                        <input asp-for="CusID" placeholder="Customer ID" />
+                        <span asp-validation-for="CusID" class="text-danger"></span>
+
+                        <input asp-for="CusfName" placeholder="First Name" />
+                        <span asp-validation-for="CusfName" class="text-danger"></span>
+
+                        <input asp-for="CuslName" placeholder="Last Name" />
+                        <span asp-validation-for="CuslName" class="text-danger"></span>
+
+                        <select asp-for="CusGender" style="margin-bottom:10px">
+                            <option value="">Gender Choose...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="CusGender" class="text-danger"></span>
+
+                        <br />
+
+                        <input asp-for="CusNIC" placeholder="NIC" />
+                        <span asp-validation-for="CusNIC" class="text-danger"></span>
+
+                        <input asp-for="CusAddress" placeholder="Contact Address" />
+                        <span asp-validation-for="CusAddress" class="text-danger"></span>
+
+                        <input asp-for="CusContact" placeholder="Contact Number" />
+                        <span asp-validation-for="CusContact" class="text-danger"></span>
+
+                        <input asp-for="CusEmail" placeholder="Email Address" />
+                        <span asp-validation-for="CusEmail" class="text-danger"></span>
+
+                        <input asp-for="CusPassw" placeholder="Password" />
+                        <span asp-validation-for="CusPassw" class="text-danger"></span>
+
+                        <input asp-for="CusStatus" value="Active" readonly />
+                        <span asp-validation-for="CusStatus" class="text-danger"></span>
+
+                        <button type="submit" class="btn btn-default center-block">Signup</button>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section><!--/form-->
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

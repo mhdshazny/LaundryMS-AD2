@@ -1,0 +1,180 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.OrderModel>
+@{
+    Layout = "~/Views/Shared/_Presentation_Layout.cshtml";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/plugins/MDB/css/mdb.min.css">
+
+}
+<br />
+<hr />
+<div class="container" style="min-height:50%">
+    <div class="row">
+        <div class="col">
+            <!-- Vertical Steppers -->
+            @if (!Model.Any())
+            {
+                <div class="step-one">
+                    <h2 class="heading">No Orders Placed Yet</h2>
+                </div>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="step-one">
+                                <h2 class="heading">Order Status</h2>
+                            </div>
+                            <!-- Stepers Wrapper -->
+                            <ul class="stepper stepper-vertical" style="padding-top:0">
+
+                                <!-- First Step -->
+                                @if (item.OrderStatus != "Added To Cart")
+                                {
+                                    <li class="completed">
+                                        <a href="#!">
+                                            <span class="circle">1</span>
+                                            <span class="label">Cart Accepted</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="#!">
+                                        <a href="#!">
+                                            <span class="circle">1</span>
+                                            <span class="label">Added To Cart</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (item.OrderStatus != "Processing")
+                                {
+                                    <li class="active">
+
+                                        <!--Section Title -->
+                                        <a href="#!">
+                                            <span class="circle">2</span>
+                                            <span class="label">Order Processed</span>
+                                        </a>
+
+                                        <!-- Section Description -->
+                                        <div class="step-content grey lighten-3">
+                                            <p>
+                                                Order Syccessfully Processed
+                                            </p>
+                                        </div>
+                                    </li>
+
+                                }
+                                else
+                                {
+                                    <li class="active">
+
+                                        <!--Section Title -->
+                                        <a href="#!">
+                                            <span class="circle">2</span>
+                                            <span class="label">Order Processing</span>
+                                        </a>
+
+                                        <!-- Section Description -->
+                                        <div class="step-content grey lighten-3">
+                                            <p>
+                                                Order Still Processing.
+                                            </p>
+                                        </div>
+                                    </li>
+                                }
+                                <!-- Second Step -->
+                                <!-- Third Step -->
+                                @if (item.OrderStatus != "Ready To Deliver")
+                                {
+
+                                    <li class="info">
+                                        <a href="#!">
+                                            <span class="circle">3</span>
+                                            <span class="label">Dispatch</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="active">
+                                        <a href="#!">
+                                            <span class="circle">3</span>
+                                            <span class="label">Sent for Deliver</span>
+                                        </a>
+                                    </li>
+                                }
+                                <!-- Fourth Step -->
+
+                                @if (item.OrderStatus != "Delivered")
+                                {
+                                    <li>
+                                        <a href="#!">
+                                            <span class="circle">4</span>
+                                            <span class="label">Delivery</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="active">
+                                        <a href="#!">
+                                            <span class="circle">4</span>
+                                            <span class="label">Successfully Delivered</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                            <!-- /.Stepers Wrapper -->
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="step-one">
+                                <h2 class="heading">Order Details</h2>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Order ID</label>
+                                <input type="text" class="form-control" value="@item.OrderID" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Delivery Address</label>
+                                <input type="text" class="form-control" value="@item.OrderDeliveryAddress" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Toatl Price</label>
+                                <input type="text" class="form-control" value="@item.OrderTotAmnt" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Payment Status</label>
+                                <input type="text" class="form-control" value="@item.OrderPaymentStatus" readonly>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            }
+            <div class="row mt-1">
+                <div class="text-right">
+                    <a  asp-action="Index" asp-controller="Presentation" class="btn btn-block btn-secondary btn-sm" data-slide="next">
+                        <i class="fa fa-home">Home</i>
+                    </a>
+                </div>
+            </div>
+            <br />
+            <hr />
+            <!-- Steppers Navigation -->
+            <!-- /.Vertical Steppers -->
+            <br /> <br /> <br />
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

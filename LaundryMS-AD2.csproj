@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
@@ -32,6 +33,20 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <!--<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="3.1.4" />-->
     <!--<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="3.1.4" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Eshopper\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Eshopper\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\Eshopper\js\bootstrap.min.js" />
+    <None Include="wwwroot\Eshopper\js\contact.js" />
+    <None Include="wwwroot\Eshopper\js\gmaps.js" />
+    <None Include="wwwroot\Eshopper\js\html5shiv.js" />
+    <None Include="wwwroot\Eshopper\js\jquery.js" />
+    <None Include="wwwroot\Eshopper\js\jquery.prettyPhoto.js" />
+    <None Include="wwwroot\Eshopper\js\jquery.scrollUp.min.js" />
+    <None Include="wwwroot\Eshopper\js\main.js" />
+    <None Include="wwwroot\Eshopper\js\price-range.js" />
   </ItemGroup>
 
 </Project>
