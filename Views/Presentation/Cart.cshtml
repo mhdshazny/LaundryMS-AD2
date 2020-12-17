@@ -1,5 +1,6 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
-@*@model LaundryMS_AD2.Models.OrderListModel;*@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
 
 @{
     Layout = "~/Views/Shared/_Presentation_Layout.cshtml";
@@ -8,89 +9,122 @@
     <div class="review-payment">
         <h2>&nbsp;Review Cart</h2>
     </div>
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+    {
+        @if (!Model.Any())
+        {
+            <div class="step-one">
+                <h2 class="heading">Nothing Added to Carts</h2>
+            </div>
+            <div class="row mt-1">
+                <div class="text-right">
+                    <a asp-action="Index" asp-controller="Presentation" class="btn btn-block btn-primary btn-lg" data-slide="next">
+                        <i class="fa fa-lock-open">Home</i>
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead style="background-color:burlywood">
+                        <tr class="cart_menu">
+                            <td class="image">Order ID</td>
+                            <td class="description">Product</td>
+                            <td class="price">Price</td>
+                            <td>Quantity</td>
+                            <td class="total">Total</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
 
-    <div class="table-responsive cart_info">
-        <table class="table table-condensed">
-            <thead>
-                <tr class="cart_menu">
-                    <td class="image">Item</td>
-                    <td class="description">Product</td>
-                    <td class="price">Price</td>
-                    <td>Quantity</td>
-                    <td class="quantity">Action</td>
-                    <td class="total">Total</td>
-                    <td></td>+
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/one.png" alt=""></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4><a href="">@item.OrdPrID</a></h4>
-                            <p>Product ID: @item.OrdPrID</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>@item.OrdPkgUP</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                @*<a class="cart_quantity_up buttons" onclick="AddOne()"> + </a>*@
-                                @*<input type="number" onchange="CalTot()" class="cart_quantity_input" value="@item.OrdPrQty" autocomplete="off" size="2">*@
-                                @*<input asp-for="@item.OrdPrQty" onchange="ChangeQty()" />*@
-                                @*<a class="cart_quantity_down" onclick="AddOne()"> - </a>*@
-                                    <a href="@Url.Action("AddOneToCart","Presentation",new { OrderRefID = item.OrderRefID, OrderQty = item.OrdPrQty})" >+</a>
-                                <input asp-for="@item.OrdPrQty" />
+                        <tr>
 
-                                    <button type="submit" id="btnSub">-</button>
+                            <td class="cart_product">
+                                <p>@item.OrdListID</p>
 
-                                    @*<button type="button" onclick="proceed()" id="@item.OrderRefID" >Update</button>*@
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            @*<form action="/" method="post">*@
-                            @*<button type="submit" href="@Url.Action("AddToCart","Presentation",new { OrderRefID = item.OrderRefID, OrderQty = item.OrdPrQty})">Update</button>*@
-                            @*</form>*@
+                            </td>
+                                <td class="cart_description">
+                                    <h4><a href="">@item.OrdPrID</a></h4>
+                                    <p>Product ID: @item.OrdPrID</p>
+                                </td>
+                                <td class="cart_price">
+                                    <p>@item.OrdPkgUP</p>
+                                </td>
 
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">@item.OrdPrAmnt</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
-                }
-                <tr>
-                    <td colspan="4">&nbsp;</td>
-                    <td colspan="2">
-                        <table class="table table-condensed total-result">
-                            <tr>
-                                <td>Cart Sub Total</td>
-                                <td>$59</td>
-                            </tr>
-                            <tr>
-                                <td>Exo Tax</td>
-                                <td>$2</td>
-                            </tr>
-                            <tr class="shipping-cost">
-                                <td>Shipping Cost</td>
-                                <td>Free</td>
-                            </tr>
-                            <tr>
-                                <td>Total</td>
-                                <td><span>$61</span></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                <td class="cart_quantity">
 
-    </div>
+                                    <form asp-action="UpdateCart" asp-route-id="" method="post">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="number" class="form-control" value="@item.OrdPrQty" name="OrdPrQty" />
+                                                    <input type="number" value="@item.OrdListID" name="listId" hidden />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <button class="btn btn-outline-secondary" type="submit">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+
+
+
+                                <td class="cart_total">
+                                    <p class="cart_total_price">@item.OrdPrAmnt</p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                </td>
+
+                        </tr>
+
+                        }
+                        <tr>
+                            <td colspan="4">&nbsp;</td>
+                            <td colspan="2">
+                                <table class="table table-condensed total-result">
+                                    <tr>
+                                        <td>Cart Sub Total</td>
+                                        <td>@Model.Sum(i => i.OrdPrAmnt)</td>
+                                    </tr>
+                                    <tr class="shipping-cost">
+                                        <td>Delivery Cost</td>
+                                        <td>0000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td><span>@Model.Sum(i => i.OrdPrAmnt)</span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="step-one">
+            <h2 class="heading">Please Login To Place an Order</h2>
+        </div>
+        <div class="row mt-1">
+            <div class="text-right">
+                <a asp-action="Login" asp-controller="CustomerLogin" class="btn btn-block btn-primary btn-lg" data-slide="next">
+                    <i class="fa fa-lock-open">Login</i>
+                </a>
+            </div>
+        </div>
+    }
+
     <hr />
 
 </div>
@@ -111,26 +145,22 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>Free E-Commerce Template</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
+                                <h1><span>BUDGET </span>-LAUNDRY</h1>
+                                <h2>Special Online Discount</h2>
+                                <p>Everyone who orders throught online will get a special discount of Rs.500 (Condistions Apply) </p>
                             </div>
                             <div class="col-sm-6">
-                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                                <img src="https://assets.stickpng.com/images/5a058a979cf05203c4b603e9.png" class="girl img-responsive" alt="" />
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>100% Responsive Design</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
+                                <h1><span>BUDGET </span>-LAUNDRY</h1>
+                                <h2>We're Finally Open</h2>
+                                <p>We're happy announce that this BUDGET- Landry Shop is officially Open.  </p>
                             </div>
                             <div class="col-sm-6">
-                                <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                                <img src="https://www.kleinfeldbridal.com/wp-content/uploads/2020/07/KleinfeldSalonHero2a.png" class="girl img-responsive" alt="" />
                             </div>
                         </div>
 
@@ -139,7 +169,6 @@
                                 <h1><span>E</span>-SHOPPER</h1>
                                 <h2>Free Ecommerce Template</h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
                                 <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
@@ -170,5 +199,9 @@
         form.setAttribute('asp-route-id',id)
         document.body.appendChild(form)
         form.submit();
+    }
+
+    function submit() {
+        $("form").submit();
     }
 </script>  

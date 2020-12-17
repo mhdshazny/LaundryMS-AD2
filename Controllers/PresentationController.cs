@@ -1,6 +1,7 @@
 ﻿using LaundryMS_AD2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace LaundryMS_AD2.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            List<PackageModel> PkgList = await _context.PackageData.ToListAsync();
+            ViewBag.PkgList = new SelectList(PkgList, "PrID", "PrName"); 
+
             return View(await _context.ProductData.ToListAsync());
         }
 
@@ -25,31 +29,109 @@ namespace LaundryMS_AD2.Controllers
         {
             //LoggedIn User from Session
             var User = HttpContext.Session.GetString("SessionCusID");
-            ViewBag.User = "USER000001";
             ViewBag.Customer = User;
 
             CustomerModel CustomerData = await _context.CustomerData
                                 .Where(c => c.CusID == User)
                                 .FirstOrDefaultAsync();
+            if (User != null)
+            {
+                ViewBag.CusID = CustomerData.CusID.ToString();
+                ViewBag.CusName = CustomerData.CusfName.ToString();
+                ViewBag.CusEmail = CustomerData.CusEmail.ToString();
+                ViewBag.CusPhone = CustomerData.CusContact.ToString();
+                ViewBag.CusAddress = CustomerData.CusAddress.ToString();
 
-            ViewBag.CusID = CustomerData.CusID.ToString();
-            ViewBag.CusName = CustomerData.CusfName.ToString();
-            ViewBag.CusEmail = CustomerData.CusEmail.ToString();
-            ViewBag.CusPhone = CustomerData.CusContact.ToString();
-            ViewBag.CusAddress = CustomerData.CusAddress.ToString();
+                //OrderList
+                var WaitingOrdList = await _context.OrderListData
+                                 .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                                 .ToListAsync();
 
-            //OrderList
-            var WaitingOrdList = await _context.OrderListData
-                             .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
-                             .ToListAsync();
+                return View(WaitingOrdList);
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(string PrID, string OrdPkg,int PrQty)
+        {
+            //sss
+            var OrderListTemp = await _context.OrderListData
+                .Where(i => i.OrdPrID == PrID && i.OrdListStatus == "Added To Cart" && i.OrdPkg==OrdPkg)
+                .FirstOrDefaultAsync();
+            if (OrderListTemp != null)
+            {
+                OrderListModel ordlistOld = new OrderListModel();
+                ordlistOld.OrderRefID = OrderListTemp.OrderRefID;
+                ordlistOld.OrdPrID = OrderListTemp.OrdPrID;
+                ordlistOld.OrdListStatus = OrderListTemp.OrdListStatus;
+                ordlistOld.OrdPkg = OrderListTemp.OrdPkg;
+                ordlistOld.OrdPkgUP = OrderListTemp.OrdPkgUP;
 
-            return View(WaitingOrdList);
+                ordlistOld.OrdPrAmnt = (OrderListTemp.OrdPrQty+PrQty)*OrderListTemp.OrdPkgUP;
+                ordlistOld.OrdPrQty = OrderListTemp.OrdPrQty + PrQty;
+                ordlistOld.OrdListID = OrderListTemp.OrdListID;
+
+                _context.Entry(await _context.OrderListData.FirstOrDefaultAsync(x => x.OrdListID == ordlistOld.OrdListID)).CurrentValues.SetValues(ordlistOld);
+                await _context.SaveChangesAsync();
+                //_context.Attach(ordlistOld);
+                //await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+
+            }
+
+            var PkgUP = await _context.PackageData
+                .Where(i => i.PkgID == OrdPkg)
+                .FirstOrDefaultAsync();
+            var TotAmnt = PkgUP.PkgPrice * PrQty;
+            OrderListModel ordlist = new OrderListModel();
+            ordlist.OrdPrID = PrID;
+            ordlist.OrdPkgUP = PkgUP.PkgPrice;
+            ordlist.OrdListStatus = "Added To Cart";
+            ordlist.OrdPkg = OrdPkg;
+            ordlist.OrdPrAmnt = TotAmnt;
+            ordlist.OrdPrQty = PrQty;
+            ordlist.OrderRefID = NewRefId().ToString();
+
+             _context.Add(ordlist);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
-        public IActionResult AddToCart()
+        public string NewRefId()
         {
-            OrderListModel ordlist = new OrderListModel();
-            return PartialView("_AddToCartPartial", ordlist);
+            var User = HttpContext.Session.GetString("SessionCusID");
+            string FinalID;
+            //New Reference ID Generation or selecting suitable
+
+            var WaitingOrdList = _context.OrderListData
+                                         .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                                         .FirstOrDefault();
+            if (WaitingOrdList == null)
+            {
+                var NewWaitingOrdList = _context.OrderListData
+                             .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+                             .FirstOrDefault();
+
+                if (NewWaitingOrdList != null)
+                {
+                    var NewRefID = NewWaitingOrdList.OrderRefID.Max().ToString();
+
+                    int num = int.Parse(NewRefID.Substring(13, 3)) + 1;
+                    var NewRefId = User.ToString() + "ORD" + num.ToString().PadLeft(3, '0');
+                    FinalID = NewRefId.ToString();
+                    return FinalID;
+
+                }
+                else
+                {
+                    FinalID = User.ToString() + "ORD001";
+
+                    return FinalID;
+                }
+
+            }
+            FinalID = WaitingOrdList.OrderRefID.ToString();
+            return FinalID;
         }
 
         public async Task<IActionResult> AddOneToCart(string OrderRefID, string OrderQty, OrderListDataLibraryModel ord)
@@ -99,8 +181,53 @@ namespace LaundryMS_AD2.Controllers
 
         public async Task<IActionResult> CusOrders()
         {
-            var orderstat = await _context.OrderData.Where(i => i.OrderStatus != "Added To Cart").ToListAsync();
+            var User = HttpContext.Session.GetString("SessionCusID");
+
+            var orderstat = await _context.OrderData.Where(i => i.OrderStatus != "Added To Cart"&&i.OrderRefNo.Contains(User)).ToListAsync();
             return View(orderstat);
+        }
+
+        public IActionResult ProductView(string id)
+        {
+            var Product = _context.ProductData
+                .Where(i => i.PrID == id).FirstOrDefault();
+            ViewBag.PrID = id;
+            ViewBag.PrName = Product.PrName;
+            ViewBag.PrStat = Product.PrStatus;
+            ViewBag.PrDescr = Product.PrDescr;
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCart(int listId, int OrdPrQty)
+        {
+            var id = listId;
+            var OrderListTemp = await _context.OrderListData
+                                       .Where(i => i.OrdListID == id && i.OrdListStatus == "Added To Cart")
+                                       .FirstOrDefaultAsync();
+            if (OrderListTemp != null)
+            {
+                OrderListModel ordlistOld = new OrderListModel();
+                ordlistOld.OrderRefID = OrderListTemp.OrderRefID;
+                ordlistOld.OrdPrID = OrderListTemp.OrdPrID;
+                ordlistOld.OrdListStatus = OrderListTemp.OrdListStatus;
+                ordlistOld.OrdPkg = OrderListTemp.OrdPkg;
+                ordlistOld.OrdPkgUP = OrderListTemp.OrdPkgUP;
+
+                ordlistOld.OrdPrAmnt = OrdPrQty * OrderListTemp.OrdPkgUP;
+                ordlistOld.OrdPrQty = OrdPrQty;
+                ordlistOld.OrdListID = OrderListTemp.OrdListID;
+
+                _context.Entry(await _context.OrderListData.FirstOrDefaultAsync(x => x.OrdListID == ordlistOld.OrdListID)).CurrentValues.SetValues(ordlistOld);
+                await _context.SaveChangesAsync();
+                //_context.Attach(ordlistOld);
+                //await _context.SaveChangesAsync();
+                return RedirectToAction("Cart");
+
+            }
+            return RedirectToAction("Cart");
         }
     }
 }

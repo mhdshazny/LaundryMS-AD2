@@ -1,4 +1,6 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
 @{ Layout = "~/Views/Shared/_Presentation_Layout.cshtml"; }
 
 
@@ -11,162 +13,195 @@
             </ol>
         </div><!--/breadcrums-->
 
-        <div class="step-one">
-            <h2 class="heading">Ordering Process</h2>
-        </div>
 
-        <div class="shopper-informations">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="bill-to">
-                        <p>&nbsp; Bill To</p>
-                        <br />
-                        <div class="shopper-info">
-                            <form>
-                                <input type="text" placeholder="Customer ID" value="@ViewBag.CusID">
-                                <input type="text" placeholder="Customer Name" value="@ViewBag.CusName">
-                                <input type="text" placeholder="Email*" value="@ViewBag.CusEmail">
-                                <input type="text" placeholder="Address 1 *" value="@ViewBag.CusAddress">
-                                <input type="text" placeholder="Phone *" value="@ViewBag.CusPhone">
-                            </form>
-                        </div>
 
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="order-message">
-                        <p>Shipping Order</p>
-                        <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-                        <label><input type="checkbox"> Shipping to bill address</label>
-                    </div>
-                </div>
+
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+        {
+            <div class="step-one">
+                <h2 class="heading">Ordering Process</h2>
             </div>
-            <hr />
-
-        </div>
-        <div class="review-payment">
-            <h2>&nbsp;Review Cart</h2>
-        </div>
-
-        <div class="table-responsive cart_info">
-            <table class="table table-condensed">
-                <thead>
-                    <tr class="cart_menu">
-                        <td class="image">Item</td>
-                        <td class="description"></td>
-                        <td class="price">Price</td>
-                        <td class="quantity">Quantity</td>
-                        <td class="total">Total</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="cart_product">
-                                <a href=""><img src="images/cart/one.png" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">@item.OrdPrID</a></h4>
-                                <p>Product ID: @item.OrdPrID</p>
-                            </td>
-                            <td class="cart_price">
-                                <p id="Price">@item.OrdPkgUP</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up buttons" onclick="AddOne()"> + </a>
-                                    <input type="number" onchange="CalTot()" class="cart_quantity_input" data-OrdID="@item.OrdPrID" data-price="@item.OrdPkgUP" value="@item.OrdPrQty" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" onclick="AddOne()"> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">@item.OrdPrAmnt</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
-                    }
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                        <td colspan="2">
-                            <table class="table table-condensed total-result">
-                                <tr>
-                                    <td>Cart Sub Total</td>
-                                    <td>$59</td>
-                                </tr>
-                                <tr>
-                                    <td>Exo Tax</td>
-                                    <td>$2</td>
-                                </tr>
-                                <tr class="shipping-cost">
-                                    <td>Shipping Cost</td>
-                                    <td>Free</td>
-                                </tr>
-                                <tr>
-                                    <td>Total</td>
-                                    <td><span>$61</span></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-        <hr />
-        <div class="review-payment">
-            <h2>&nbsp;Review & Payment</h2>
-        </div>
-        <div class="shopper-informations">
-            <div class="row">
-                <div class="col-sm">
-                    <div class="bill-to">
-                        <div class="shopper-info">
+            <div class="shopper-informations">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="bill-to">
+                            <p>&nbsp; Bill To</p>
                             <br />
-
-                            <div class="col-sm-3">
-                                <div class="shopper-info">
-                                    <form>
-                                        <p style="font-size:medium;margin-left:4%"> Delivery option</p>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-sm-7">
-                                <div class="shopper-info">
-                                    <form>
-                                        <input type="text" placeholder="Customer ID" class="input" value="Cash on Delivery" readonly>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <p style="margin-left:2%">
-                                    <i class="fa fa-check m-2"></i>
-                                </p>
-
-
+                            <div class="shopper-info">
+                                <form>
+                                    <input type="text" placeholder="Customer ID" value="@ViewBag.CusID">
+                                    <input type="text" placeholder="Customer Name" value="@ViewBag.CusName">
+                                    <input type="text" placeholder="Email*" value="@ViewBag.CusEmail">
+                                    <input type="text" placeholder="Address 1 *" value="@ViewBag.CusAddress">
+                                    <input type="text" placeholder="Phone *" value="@ViewBag.CusPhone">
+                                </form>
                             </div>
 
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="order-message">
+                            <p>Shipping Order</p>
+                            <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                            <label><input type="checkbox"> Shipping to bill address</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-6">
+                <hr />
+
+            </div>
+            <div class="review-payment">
+                <h2>&nbsp;Review Cart</h2>
+            </div>
+            @if (!Model.Any())
+            {
+                <div class="step-one">
+                    <h2 class="heading">Nothing Added to Carts</h2>
+                </div>
+                <div class="row mt-1">
+                    <div class="text-right">
+                        <a asp-action="Index" asp-controller="Presentation" class="btn btn-block btn-primary btn-lg" data-slide="next">
+                            <i class="fa fa-lock-open">Home</i>
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image">Item</td>
+                                <td class="description"></td>
+                                <td class="price">Price</td>
+                                <td class="quantity">Quantity</td>
+                                <td class="total">Total</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="cart_product">
+                                        <a href=""><img src="images/cart/one.png" alt=""></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="">@item.OrdPrID</a></h4>
+                                        <p>Product ID: @item.OrdPrID</p>
+                                    </td>
+                                    <td class="cart_price">
+                                        <p id="Price">@item.OrdPkgUP</p>
+                                    </td>
+                                    <td class="cart_quantity">
+                                        <div class="cart_quantity_button">
+                                            <input type="number" class="cart_quantity_input" data-OrdID="@item.OrdPrID" data-price="@item.OrdPkgUP" value="@item.OrdPrQty" autocomplete="off" size="2">
+                                        </div>
+                                    </td>
+                                    <td class="cart_total">
+                                        <p class="cart_total_price">@item.OrdPrAmnt</p>
+                                    </td>
+                                    <td class="cart_delete">
+                                        <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td colspan="2">
+                                    <table class="table table-condensed total-result">
+                                        <tr>
+                                            <td>Cart Sub Total</td>
+                                            <td>1500</td>
+                                        </tr>
+                                        <tr class="shipping-cost">
+                                            <td>Delivery Cost</td>
+                                            <td>Free</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td><span>1500.00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
-            </div>
-            <hr />
-        </div>
-        <div class="container">
-            <div class="row">
+                <hr />
+                <div class="review-payment">
+                    <h2>&nbsp;Review & Payment</h2>
+                </div>
+                <div class="shopper-informations">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="bill-to">
+                                <div class="shopper-info">
+                                    <br />
 
-                <div class="col-xl">
-                    <a class="btn btn-block btn-primary">Checkout</a>
-                    <a class="btn btn-block btn-primary">Cancel</a>
+                                    <div class="col-sm-3">
+                                        <div class="shopper-info">
+                                            <form>
+                                                <p style="font-size:medium;margin-left:4%"> Delivery option</p>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="shopper-info">
+                                            <form>
+                                                <input type="text" placeholder="Customer ID" class="input" value="Cash on Delivery" readonly>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p style="margin-left:2%">
+                                            <i class="fa fa-check m-2"></i>
+                                        </p>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-xl">
+                            <a class="btn btn-block btn-primary">Checkout</a>
+                            <a class="btn btn-block btn-primary">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        }
+        else
+        { <div class="heading">
+                <h2 class="heading">Ordering Process</h2>
+            </div>
+            <div class="step-one">
+                <h2 class="heading">Please Login To Place an Order</h2>
+            </div>
+            <div class="row mt-1">
+                <div class="text-right">
+                    <a asp-action="Login" asp-controller="CustomerLogin" class="btn btn-block btn-primary btn-lg" data-slide="next">
+                        <i class="fa fa-lock-open">Login</i>
+                    </a>
                 </div>
             </div>
-        </div>
+        }
+
     </div>
 </section> <!--/#cart_items-->
 <br />

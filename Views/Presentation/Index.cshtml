@@ -1,4 +1,6 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.ProductModel>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LaundryMS_AD2.Models.ProductModel>
 @{ Layout = "~/Views/Shared/_Presentation_Layout.cshtml"; }
 
 
@@ -18,7 +20,7 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="https://dynamic.brandcrowd.com/asset/logo/392b6eca-bb75-41cc-8e6f-8822aac9d45b/logo?v=4" alt="" />
+                                        <img src="https://www.designhill.com/resize_img.php?atyp=page_file&pth=ft_ca_sl2||183||bannerslider_2&flp=1568705517-10297739835d808bed101764-57115198.png" alt="" />
                                         <h2>
                                             @Html.DisplayFor(modelItem => item.PrName)
                                         </h2>
@@ -35,7 +37,7 @@
                                             <p>
                                                 @Html.DisplayFor(modelItem => item.PrDescr)
                                             </p>
-                                            <button class="btn btn-default add-to-cart" onclick="" data-toggle="ajax-model" data-target="#AddToCart" data-PrID="@item.PrID" data-url="@Url.Action("AddToCart")"><i class="fa fa-shopping-cart"></i>Add to cart2</button>
+                                            <button class="btn btn-default add-to-cart" onclick="ShowModal(this)" data-prid="@item.PrID" data-url="@Url.Action("AddToCart")"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -348,21 +350,90 @@
     </div>
 </section>
 
+<div class="modal fade" id="AddToCart">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">Add To Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @if (HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+            {<form asp-action="AddToCart" method="post">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Product ID</label>
+                            <input id="PrID" name="PrID" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Product Quantity</label>
+                            <select class="form-control" data-val="true" data-val-required="The Ordered Package field is required." name="OrdPkg">
+                                <option value="">--Select a Package--</option>
+                                <option value="PKG0000001">Dry Clean</option>
+                                <option value="PKG0000002">Dry Clean + Iron</option>
+                                <option value="PKG0000003">Dry Clean + Press</option>
+                            </select>                        </div>
+                        <div class="form-group">
+                            <label>Product Quantity</label>
+                            <input type="number" id="PrQty" name="PrQty" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" data-save="modal">
+                            Save
+                        </button>
+                    </div>
+                </form>
+
+            }
+            else
+            {
+                <div class="modal-body">
+                    <div class="step-one">
+                        <h2 class="heading">Please Login To Place an Order</h2>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row mt-1">
+                        <div class="text-right">
+                            <a asp-action="Login" asp-controller="CustomerLogin" class="btn btn-block btn-primary btn-lg" data-slide="next">
+                                <i class="fa fa-lock-open">Login</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
 
         var PlaceHolderElement = $('#PlaceHolder')
 
-        function ShowModal() {
-            var url = $(this).data('url');
-            var PrID = $(this).data('PrID');
-            $.get(url).done(function (data) {
-                PlaceHolderElement.html(data);
-                PlaceHolderElement.find('.modal').modal('show');
-                $('#').val(PrID)
-            })
-        }
-    });
 
+
+    });
+    function ShowModal(event) {
+        var url = $(event).data('url');
+        var PrID = $(event).data('prid');
+        $('#PrID').val(PrID);
+        $('#AddToCart').modal('show');
+        //$.get(url).done(function (data) {
+        //    PlaceHolderElement.html(data);
+        //    PlaceHolderElement.find('.modal').modal('show');
+        //    $('#').val(PrID)
+        //})
+    }
 </script>

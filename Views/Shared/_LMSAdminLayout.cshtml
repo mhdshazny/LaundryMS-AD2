@@ -1,16 +1,6 @@
-﻿@*<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-    </head>
-    <body>
-        <div>
-            @RenderBody()
-        </div>
-    </body>
-    </html>*@
 
 
 <!DOCTYPE html>
@@ -91,6 +81,14 @@
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-user"></i>
                         <i class="card-header text-light">User Email</i>
+                        @*@if (@HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Employee")
+                        {
+                            @HttpContextAccessor.HttpContext.Session.GetString("SessionEmail") <br />@HttpContextAccessor.HttpContext.Session.GetString("SessionRole")
+                        }
+                        else
+                        {
+                            Context.Response.Redirect("/CustomerLogin/Login?=SessionCleared");
+                        }*@
                         @*<span class="badge badge-warning navbar-badge">15</span>*@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
@@ -426,41 +424,41 @@
 
 
     <!--</script>-->
-<script>
-    $(document).ready(function () {
-        $('.navbar-collapse a').click(function () {
-            $(".navbar-collapse").collapse('hide');
+    <script>
+        $(document).ready(function () {
+            $('.navbar-collapse a').click(function () {
+                $(".navbar-collapse").collapse('hide');
 
-        });
+            });
 
 
-        $('#PassVisible').click(function PassVisible() {
-            var x = document.getElementById("Password");
-            var y = document.getElementById("Password2");
-            if (x.type === "password") {
-                x.type = "text";
-                y.type = "text";
-            } else {
-                x.type = "password";
-                y.type = "password";
+            $('#PassVisible').click(function PassVisible() {
+                var x = document.getElementById("Password");
+                var y = document.getElementById("Password2");
+                if (x.type === "password") {
+                    x.type = "text";
+                    y.type = "text";
+                } else {
+                    x.type = "password";
+                    y.type = "password";
+                }
+            });
+
+            function UserReport() {
+                window.open(
+                    //asp - controller="User" asp - action="UserReport"
+                    "User/UserReport", "_blank");
             }
+            function IssuesReport() {
+                window.open(
+                    //asp - controller="User" asp - action="UserReport"
+                    "Issues/IssuesReport", "_blank");
+            }
+
         });
 
-        function UserReport() {
-            window.open(
-                //asp - controller="User" asp - action="UserReport"
-                "User/UserReport", "_blank");
-        }
-        function IssuesReport() {
-            window.open(
-                //asp - controller="User" asp - action="UserReport"
-                "Issues/IssuesReport", "_blank");
-        }
 
-    });
-
-
-</script>
+    </script>
 
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
