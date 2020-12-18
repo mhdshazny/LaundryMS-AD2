@@ -46,11 +46,38 @@ namespace LaundryMS_AD2.Controllers
                 var WaitingOrdList = await _context.OrderListData
                                  .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
                                  .ToListAsync();
+                var OneItem = WaitingOrdList.Where(i => i.OrderRefID.Contains(User)).FirstOrDefault();
+                ViewBag.OrdRefID = OneItem.OrderRefID;
+                ViewBag.OrdNewID = NewOrdId().ToString();
 
                 return View(WaitingOrdList);
             }
             return View();
         }
+        public string NewOrdId()
+        {
+            string NewID = "ORD0000001";
+
+            try
+            {
+                string Id = _context.OrderData
+                       .Max(i => i.OrderID);
+                int num;
+                if (Id != null)
+                {
+                    num = int.Parse(Id.Substring(3, 7)) + 1;
+                    NewID = "ORD" + num.ToString().PadLeft(7, '0');
+                    return NewID;
+                }
+            }
+            catch (Exception err)
+            {
+                throw err;
+            }
+            return NewID;
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddToCart(string PrID, string OrdPkg,int PrQty)
         {
@@ -228,6 +255,40 @@ namespace LaundryMS_AD2.Controllers
 
             }
             return RedirectToAction("Cart");
+        }
+        [HttpPost]
+        public async Task<IActionResult> PlaceOrder(string OrderID, [Bind("OrderID,OrderRefNo,OrderCusID,OrderApprvdBy,OrderTotQty,OrderTotAmnt,OrderDate,OrderDelivery,OrderDeliveryAddress,OrderDescr,OrderStatus,OrderPaymentStatus")] OrderModel orderModel)
+        {
+            string id = OrderID;
+            if (id != orderModel.OrderID)
+            {
+                return NotFound();
+            }
+
+
+                try
+                {
+                orderModel.OrderStatus = "Order Placed";
+                    _context.Add(orderModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+            }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderModelExists(orderModel.OrderID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+        }
+        private bool OrderModelExists(string id)
+        {
+            return _context.OrderData.Any(e => e.OrderID == id);
         }
     }
 }

@@ -3,7 +3,6 @@
 @model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
 @{ Layout = "~/Views/Shared/_Presentation_Layout.cshtml"; }
 
-
 <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -21,35 +20,144 @@
             <div class="step-one">
                 <h2 class="heading">Ordering Process</h2>
             </div>
-            <div class="shopper-informations">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="bill-to">
-                            <p>&nbsp; Bill To</p>
-                            <br />
-                            <div class="shopper-info">
-                                <form>
-                                    <input type="text" placeholder="Customer ID" value="@ViewBag.CusID">
-                                    <input type="text" placeholder="Customer Name" value="@ViewBag.CusName">
-                                    <input type="text" placeholder="Email*" value="@ViewBag.CusEmail">
-                                    <input type="text" placeholder="Address 1 *" value="@ViewBag.CusAddress">
-                                    <input type="text" placeholder="Phone *" value="@ViewBag.CusPhone">
-                                </form>
+            <form asp-action="PlaceOrder" id="placeorder" name="PlaceOrder" method="post">
+                <div class="shopper-informations">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="bill-to">
+                                <p>&nbsp; Bill To</p>
+                                <br />
+                                <div class="shopper-info">
+
+                                    <div class="container-fluid" style="margin:10px;margin-top:0px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="margin-top:6px">
+                                                    <label class="form-control-label">&nbsp;Customer ID</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" value="@ViewBag.CusID" name="OrderCusID" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" style="margin:10px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="margin-top:6px">
+                                                    <label class="">&nbsp;Customer Name</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" value="@ViewBag.CusName" name="OrderCusName" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" style="margin:10px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="margin-top:6px">
+                                                    <label class="form-control-label">&nbsp;Customer Email</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" value="@ViewBag.CusEmail" name="OrderCusEmail" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" style="margin:10px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="margin-top:6px">
+                                                    <label class="form-control-label">&nbsp;Customer Address</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" value="@ViewBag.CusAddress" name="OrderDeliveryAddress" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" style="margin:10px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="        margin-top: 6px">
+                                                    <label class="form-control-label">&nbsp;Customer Contact No.</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" value="@ViewBag.CusPhone" name="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br /><br /> <hr />
+                                    <div class="container-fluid" style="margin:10px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="margin-top:6px">
+                                                    <label class="form-control-label">&nbsp;Order Date</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="date" class="form-control" value="@ViewBag.OrdDate" name="OrderDate" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" style="margin:10px">
+                                        <div class="row">
+                                            <div class="form-group">
+
+                                                <div class="col-sm-4" style="margin-top:6px">
+                                                    <label class="form-control-label">&nbsp;Delivery Date</label>
+                                                </div>
+
+                                                <div class="col-sm-8">
+                                                    <input type="date" class="form-control" value="@ViewBag.DelDate" name="OrderDelivery" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br /> <br />
+
+                                    <input type="text" name="OrderRefNo" placeholder="Phone *" value="@ViewBag.OrdRefID" hidden>
+                                    <input type="text" name="OrderTotQty" placeholder="Phone *" value="@Model.Sum(i=>i.OrdPrQty)" hidden>
+                                    <input type="text" name="OrderTotAmnt" placeholder="Phone *" value="@Model.Sum(i=>i.OrdPrAmnt)" hidden>
+                                    <input type="text" name="OrderID" placeholder="Phone *" value="@ViewBag.OrdNewID" hidden>
+                                    <input type="text" name="OrderPaymentStatus" placeholder="Phone *" value="Cash On Delivery" hidden>
+
+                                    @*<input type="text" name="OrdRefID" placeholder="Phone *" value="@ViewBag.OrdRefID" hidden>
+                                    <input type="text" name="OrdTotQty" placeholder="Phone *" value="@Model.Sum(i=>i.OrdPrQty)" hidden>
+                                    <input type="text" name="OrdTotAmnt" placeholder="Phone *" value="@Model.Sum(i=>i.OrdPrAmnt)" hidden>*@
+                                </div>
+
                             </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="order-message">
+                                <p>Shipping Order</p>
+                                <textarea name="OrderDecr" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                                <label><input type="checkbox"> Shipping to bill address</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
 
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="order-message">
-                            <p>Shipping Order</p>
-                            <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-                            <label><input type="checkbox"> Shipping to bill address</label>
-                        </div>
-                    </div>
                 </div>
-                <hr />
+            </form>
 
-            </div>
             <div class="review-payment">
                 <h2>&nbsp;Review Cart</h2>
             </div>
@@ -96,9 +204,9 @@
                                         <p id="Price">@item.OrdPkgUP</p>
                                     </td>
                                     <td class="cart_quantity">
-                                        <div class="cart_quantity_button">
-                                            <input type="number" class="cart_quantity_input" data-OrdID="@item.OrdPrID" data-price="@item.OrdPkgUP" value="@item.OrdPrQty" autocomplete="off" size="2">
-                                        </div>
+
+                                        <p> @item.OrdPrQty</p>
+
                                     </td>
                                     <td class="cart_total">
                                         <p class="cart_total_price">@item.OrdPrAmnt</p>
@@ -114,15 +222,15 @@
                                     <table class="table table-condensed total-result">
                                         <tr>
                                             <td>Cart Sub Total</td>
-                                            <td>1500</td>
+                                            <td>@Model.Sum(i => i.OrdPrAmnt)</td>
                                         </tr>
                                         <tr class="shipping-cost">
                                             <td>Delivery Cost</td>
-                                            <td>Free</td>
+                                            <td>0000.00</td>
                                         </tr>
                                         <tr>
                                             <td>Total</td>
-                                            <td><span>1500.00</span></td>
+                                            <td><span>@Model.Sum(i => i.OrdPrAmnt)</span></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -177,8 +285,8 @@
                     <div class="row">
 
                         <div class="col-xl">
-                            <a class="btn btn-block btn-primary">Checkout</a>
-                            <a class="btn btn-block btn-primary">Cancel</a>
+                            <button class="btn btn-block btn-primary" type="button" onclick="submit(this)">Submit</button>
+                            <a class="btn btn-block btn-primary" asp-action="">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -283,5 +391,9 @@
         var UP = $(this).data('price')
         var OrdID = $(this).data('OrdID')
         alert(UP)
+    }
+    function submit() {
+        $("#placeorder").submit()
+        //document.getElement('placeorder').submit();
     }
 </script>

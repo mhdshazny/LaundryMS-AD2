@@ -3,88 +3,218 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Admin Dashboard</h1>
+    <h1 class="display-4 text-light" style="background-color:gray">Admin Dashboard</h1>
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <!-- Card -->
             <div class="card text-center">
-                <div class="card-header">Total Sales</div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
-                    </p>
+                    <h1 class="thumbnail font-weight-bold">Total Orders</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cart-arrow-down"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="font-weight-bold">@ViewBag.TotOrds</h3>
+
                 </div>
-                <div class="card-footer text-muted">2 days ago</div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
             </div>
             <!-- Card -->
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card text-center">
-                <div class="card-header">Featured</div>
+
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <h1 class="thumbnail font-weight-bold">Delivered Orders</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-check"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotOrdDel</h3>
+
                 </div>
-                <div class="card-footer text-muted">2 days ago</div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card text-center">
-                <div class="card-header">Featured</div>
+
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <h1 class="thumbnail font-weight-bold">Pending Orders</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotOrdPen</h3>
+
                 </div>
-                <div class="card-footer text-muted">2 days ago</div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card text-center">
-                <div class="card-header">Featured</div>
+
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <h1 class="thumbnail font-weight-bold">Total Income</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-teal elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotIncome</h3>
+
                 </div>
-                <div class="card-footer text-muted">2 days ago</div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card text-center">
-                <div class="card-header">Featured</div>
+
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <h1 class="thumbnail font-weight-bold">Total Sales</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-comment-dollar"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotSales</h3>
+
                 </div>
-                <div class="card-footer text-muted">2 days ago</div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card text-center">
-                <div class="card-header">Featured</div>
+
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <h1 class="thumbnail font-weight-bold">Pending Credits</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-credit-card"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotCredits</h3>
+
                 </div>
-                <div class="card-footer text-muted">2 days ago</div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
             </div>
         </div>
+        <div class="col-3">
+            <div class="card text-center">
+
+                <div class="card-body">
+                    <h1 class="thumbnail font-weight-bold">Total Customers</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotCust</h3>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card text-center">
+
+                <div class="card-body">
+                    <h1 class="thumbnail font-weight-bold">Total Employees</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-id-badge"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail font-weight-bold">@ViewBag.TotCust</h3>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
+            </div>
+        </div>        
+        @*<div class="col">
+            <div class="card text-center">
+
+                <div class="card-body">
+                    <h1 class="thumbnail font-weight-bold">Total Employees</h1>
+                    <div class="info-box elevation-0">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-id-badge"></i></span>
+                        <div class="info-box-content">
+                            <p class="card-text">
+                                Sales calculated through all the online and other orders  made by our customers throughout the country
+                            </p>
+                        </div>
+                    </div>
+                    <h3 class="thumbnail">@ViewBag.TotCust</h3>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <span class="date-time-span">
+                        <time datetime="hh:mm">Updated : @DateTime.Now.ToString("dddd, MMM - yyyy  (HH:mm)")</time>
+                    </span>
+                </div>
+            </div>
+        </div>*@
     </div>
+    
 </div>

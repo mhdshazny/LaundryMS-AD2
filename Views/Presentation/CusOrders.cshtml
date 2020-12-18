@@ -35,7 +35,7 @@
                                 <ul class="stepper stepper-vertical" style="padding-top:0">
 
                                     <!-- First Step -->
-                                    @if (item.OrderStatus != "Added To Cart")
+                                    @if (item.OrderStatus != "Order Placed")
                                     {
                                         <li class="completed">
                                             <a href="#!">
@@ -46,10 +46,10 @@
                                     }
                                     else
                                     {
-                                        <li class="#!">
+                                        <li class="active">
                                             <a href="#!">
                                                 <span class="circle">1</span>
-                                                <span class="label">Added To Cart</span>
+                                                <span class="label">Order Placed</span>
                                             </a>
                                         </li>
                                     }
@@ -67,7 +67,7 @@
                                             <!-- Section Description -->
                                             <div class="step-content grey lighten-3">
                                                 <p>
-                                                    Order Syccessfully Processed
+                                                    Order Syccessfully Processed.
                                                 </p>
                                             </div>
                                         </li>
@@ -86,7 +86,7 @@
                                             <!-- Section Description -->
                                             <div class="step-content grey lighten-3">
                                                 <p>
-                                                    Order Still Processing.
+                                                    Order Syccessfully Processed.
                                                 </p>
                                             </div>
                                         </li>
@@ -96,10 +96,10 @@
                                     @if (item.OrderStatus != "Ready To Deliver")
                                     {
 
-                                        <li class="info">
+                                        <li class="active">
                                             <a href="#!">
                                                 <span class="circle">3</span>
-                                                <span class="label">Dispatch</span>
+                                                <span class="label">Dispatched and Sent for Delivery</span>
                                             </a>
                                         </li>
                                     }

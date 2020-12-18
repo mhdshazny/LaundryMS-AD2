@@ -1,0 +1,97 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.OrderModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderReport</title>
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Order Report</h1>
+        <h4 class="text-center">All Order details from the beginning</h4>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead style="background-color:grey;">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderCusID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderApprvdBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderTotQty)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderTotAmnt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderDelivery)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderDeliveryAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderStatus)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderPaymentStatus)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="border-bottom">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderCusID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderApprvdBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderTotQty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderTotAmnt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDelivery)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDeliveryAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderPaymentStatus)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
