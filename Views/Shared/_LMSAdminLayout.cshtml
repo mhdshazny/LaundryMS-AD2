@@ -80,17 +80,20 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-user"></i>
-                        <i class="card-header text-light">User Email</i>
-                        @*@if (@HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Employee")
-                        {
-                            @HttpContextAccessor.HttpContext.Session.GetString("SessionEmail") <br />@HttpContextAccessor.HttpContext.Session.GetString("SessionRole")
-                        }
-                        else
-                        {
-                            Context.Response.Redirect("/CustomerLogin/Login?=SessionCleared");
-                        }*@
-                        @*<span class="badge badge-warning navbar-badge">15</span>*@
-                    </a>
+                            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Employee" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                            {
+                            <i class="card-header text-light">
+                                @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpEmail") ( @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") )
+                            </i>
+
+
+                                
+                            }
+                            else
+                            {
+                                Context.Response.Redirect("/EmployeeIdentity/Login?=SessionCleared");
+                            }
+                        </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                         <span class="dropdown-item dropdown-header">User Options</span>
                         <div class="dropdown-divider"></div>
@@ -99,7 +102,7 @@
                             <span class="float-right fa fa-check"></span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a asp-action="Login" asp-controller="Identity" class="dropdown-item">
+                        <a asp-action="LoginOut" asp-controller="EmployeeIdentity" class="dropdown-item">
                             <i class="fas fa-sign-out-alt mr-2"></i>Log Out
                             <span class="float-right text-muted text-sm"></span>
                         </a>
@@ -140,13 +143,27 @@
                                 with font-awesome or any other icon font library -->
                                 @* Dashboard *@
                                 <li class="nav-item has-treeview">
-                                    <a asp-controller="Home" asp-action="Index" class="nav-link text-light">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                                        <p>
-                                            Dashboard
-                                            @*<i class="right fas fa-angle-left"></i>*@
-                                        </p>
-                                    </a>
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                    {
+                                        <a asp-controller="Admin" asp-action="Dashboard" class="nav-link text-light">
+                                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <p>
+                                                Dashboard
+                                                @*<i class="right fas fa-angle-left"></i>*@
+                                            </p>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Home" asp-action="Index" class="nav-link text-light">
+                                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <p>
+                                                Dashboard
+                                                @*<i class="right fas fa-angle-left"></i>*@
+                                            </p>
+                                        </a>
+                                    }
+                                    
                                 </li>
 
                                 @* User *@

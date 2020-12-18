@@ -5,96 +5,122 @@
     Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table id="IndexTable" class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderRefNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderCusID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderApprvdBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderTotQty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderTotAmnt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDelivery)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDeliveryAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDescr)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderRefNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderCusID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderApprvdBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderTotQty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderTotAmnt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDelivery)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDeliveryAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDescr)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderStatus)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<h1>Order Management</h1>
+
+<h4>Order Info</h4>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            @*@if (@HttpContextAccessor.HttpContext.Session.GetString("SessionRole") != "Employee")*@
+            @*{*@
+
+                <div class="col-9">
+                    <a asp-action="Create" class="btn btn-info">Create New</a>
+                </div>
+                <div class="col">
+                    <div class="btn-group ">
+                        <a asp-action="OrderReport" asp-route-data="Pending" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Pending Orders Report</a>|
+                        <a asp-action="OrderReport" asp-route-data="Delivered" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Delivered Orders Report</a>|
+                        <a asp-action="OrderReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />All Order Report</a>
+                    </div>
+                </div>
+            @*}*@
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="IndexTable" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderRefNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderCusID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderApprvdBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderTotQty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderTotAmnt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDelivery)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDeliveryAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDescr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderStatus)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderRefNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderCusID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderApprvdBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderTotQty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderTotAmnt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDelivery)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDeliveryAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDescr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderStatus)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+
+                                <a asp-action="Edit" asp-route-id="@item.OrderID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.OrderID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.OrderID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 @section Scripts{
     <script>
 

@@ -15,9 +15,11 @@ namespace LaundryMS_AD2.Models
         public string UserID { get; set; }
 
         [DisplayName("Email ID")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [DisplayName("Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public string Role { get; set; }
