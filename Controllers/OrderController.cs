@@ -66,27 +66,30 @@ namespace LaundryMS_AD2.Controllers
         {
             //PreDefined Values
             //LoggedIn User from Session
-            var User = "CUS0000002";
-            ViewBag.User = "USER000001";
-            ViewBag.Customer = User;
-                
-            //New Reference ID Generation or selecting suitable
-            var WaitingOrdList = await _context.OrderListData
-                                         .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
-                                         .FirstOrDefaultAsync();
-            ViewBag.ReferenceID = WaitingOrdList.OrderRefID.ToString();
+            //var User = "CUS0000002";
+            //ViewBag.User = "USER000001";
+            //ViewBag.Customer = User;
 
-            //Tot Amnt For Payment
-            var WaitingOrdList2 = await _context.OrderListData
-                             .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
-                             .ToListAsync();
-            ViewBag.TotAmnt = WaitingOrdList2.Sum(i => i.OrdPrAmnt).ToString();
+            ////New Reference ID Generation or selecting suitable
+            //var WaitingOrdList = await _context.OrderListData
+            //                             .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+            //                             .FirstOrDefaultAsync();
+            //ViewBag.ReferenceID = WaitingOrdList.OrderRefID.ToString();
 
-            //Tot Quantity of Products
-            ViewBag.PrQty = WaitingOrdList2.Sum(i => i.OrdPrQty).ToString();
+            ////Tot Amnt For Payment
+            //var WaitingOrdList2 = await _context.OrderListData
+            //                 .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
+            //                 .ToListAsync();
+            //ViewBag.TotAmnt = WaitingOrdList2.Sum(i => i.OrdPrAmnt).ToString();
+
+            ////Tot Quantity of Products
+            //ViewBag.PrQty = WaitingOrdList2.Sum(i => i.OrdPrQty).ToString();
+            //
+            List<OrderListModel> OrdList = _context.OrderListData.Where(i => i.OrdListStatus == "Added To Cart").Distinct().ToList();
+            ViewBag.ReferenceID = new SelectList(OrdList, "OrderRefID", "OrderRefID");
 
             //New OrderID for Checkout
-            ViewBag.NewID = NewId();
+            ViewBag.NewID = await NewId();
 
             return View();
         }
@@ -126,11 +129,37 @@ namespace LaundryMS_AD2.Controllers
             {
                 _context.Add(orderModel);
                 await _context.SaveChangesAsync();
+                await UpdateOrderList(orderModel.OrderCusID);
                 return RedirectToAction(nameof(Index));
             }
             return View(orderModel);
         }
+        public async Task<bool> UpdateOrderList(string OrderCusID)
+        {
+            bool result = false;
+            var OrderList = await _context.OrderListData.Where(i => i.OrderRefID.Contains(OrderCusID) && i.OrdListStatus == "Added To Cart").ToListAsync();
+            if (OrderList.Count > 0)
+            {
+                foreach (var item in OrderList)
+                {
+                    OrderListModel ordListModel = new OrderListModel();
+                    ordListModel.OrderRefID = item.OrderRefID;
+                    ordListModel.OrdListID = item.OrdListID;
+                    ordListModel.OrdListStatus = "Order Placed";
+                    ordListModel.OrdPkg = item.OrdPkg;
+                    ordListModel.OrdPkgUP = item.OrdPkgUP;
+                    ordListModel.OrdPrAmnt = item.OrdPrAmnt;
+                    ordListModel.OrdPrID = item.OrdPrID;
+                    ordListModel.OrdPrQty = item.OrdPrQty;
 
+                    _context.Entry(await _context.OrderListData.FirstOrDefaultAsync(x => x.OrdListID == ordListModel.OrdListID)).CurrentValues.SetValues(ordListModel);
+                    await _context.SaveChangesAsync();
+                }
+                return true;
+
+            }
+            return result;
+        }
         // GET: Order/Edit/5
         public async Task<IActionResult> Edit(string id)
         {

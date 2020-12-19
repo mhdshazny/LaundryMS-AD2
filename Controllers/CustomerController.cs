@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LaundryMS_AD2.Models;
+using Rotativa.AspNetCore;
 
 namespace LaundryMS_AD2.Controllers
 {
@@ -164,6 +165,23 @@ namespace LaundryMS_AD2.Controllers
         private bool CustomerModelExists(string id)
         {
             return _context.CustomerData.Any(e => e.CusID == id);
+        }
+        public async Task<IActionResult> CustomerReport(string data)
+        {
+            if (data != null)
+            {
+                if (data == "Active")
+                {
+                    var OrderDelivered = await _context.CustomerData.Where(i => i.CusStatus == data).ToListAsync();
+                    return new ViewAsPdf(OrderDelivered);
+
+                }
+                var OrderPending = await _context.CustomerData.Where(i => i.CusStatus != "Active").ToListAsync();
+                return new ViewAsPdf(OrderPending);
+            }
+            var OrderData = await _context.CustomerData.ToListAsync();
+
+            return new ViewAsPdf(OrderData);
         }
     }
 }

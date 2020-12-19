@@ -182,25 +182,26 @@
                                                 <p>View Users</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="User" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-2"></i>
-                                                <p>Create User Account</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="User" asp-action="UserReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                        {
+                                            <li class="nav-item">
+                                                <a asp-controller="User" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                    <i class="far fa-circle nav-icon ml-2"></i>
+                                                    <p>Create User Account</p>
+                                                </a>
+                                            </li>
+                                        }
+
+                                    <li class="nav-item">
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                        {
+                                            <a asp-controller="User" asp-action="EmployeeReport" target="_blank" class="nav-link bg-gradient-secondary">
                                                 <i class="far fa-circle nav-icon ml-2"></i>
                                                 <p>Generate User Report</p>
                                             </a>
-                                        </li>
+                                        }
 
-                                        <li class="nav-item">
-                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-2"></i>
-                                                <p>User Issues</p>
-                                            </a>
-                                        </li>
+                                    </li>
                                     </ul>
                                 </li>
 
@@ -227,16 +228,14 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
+                                            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                            {
                                             <a asp-controller="Customer" asp-action="CustomerReport" target="_blank" class="nav-link bg-gradient-secondary">
                                                 <i class="far fa-circle nav-icon ml-2"></i>
                                                 <p>Customer Report</p>
                                             </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                                <i class="fa fa-info-circle nav-icon ml-2"></i>
-                                                <p>Customer Issues</p>
-                                            </a>
+                                            }
+                                            
                                         </li>
 
                                     </ul>
@@ -265,12 +264,6 @@
                                                 <p>Add a Product</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Issues" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-2"></i>
-                                                <p>Product Issues</p>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </li>
                                 @* Tasks *@
@@ -289,24 +282,33 @@
                                                 <p>View Orders</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Order" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Create an Order</p>
-                                            </a>
-                                        </li>
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                        {
+                                            <li class="nav-item">
+                                                <a asp-controller="Order" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                    <i class="far fa-circle nav-icon ml-3"></i>
+                                                    <p>Create an Order</p>
+                                                </a>
+                                            </li>
+                                        }
+
+
                                         <li class="nav-item">
                                             <a asp-controller="OrderList" asp-action="Index" class="nav-link bg-gradient-secondary">
                                                 <i class="far fa-circle nav-icon ml-3"></i>
                                                 <p>View Order List</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Order" asp-action="OrderReport" target="_blank" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Order Report</p>
-                                            </a>
-                                        </li>
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                        {
+                                            <li class="nav-item">
+                                                <a asp-controller="Order" asp-action="OrderReport" target="_blank" class="nav-link bg-gradient-secondary">
+                                                    <i class="far fa-circle nav-icon ml-3"></i>
+                                                    <p>Order Report</p>
+                                                </a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </li>
 
@@ -321,59 +323,27 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
+                                            <a asp-controller="Packages" asp-action="Index" class="nav-link bg-gradient-secondary">
                                                 <i class="far fa-circle nav-icon ml-3"></i>
                                                 <p>View Packages</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Create a Package</p>
-                                            </a>
-                                        </li>
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                        {
+                                            <li class="nav-item">
+                                                <a asp-controller="Packages" asp-action="Create" class="nav-link bg-gradient-secondary">
+                                                    <i class="far fa-circle nav-icon ml-3"></i>
+                                                    <p>Create a Package</p>
+                                                </a>
+                                            </li>
+                                        }
 
-                                        <li class="nav-item">
-                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Package Issues</p>
-                                            </a>
-                                        </li>
+
 
                                     </ul>
                                 </li>
                                 @* Bugs *@
-                                <li class="nav-item has-treeview">
-                                    <a href="#" class="nav-link text-light">
-                                        <i class="nav-icon fas fa-cash-register"></i>
-                                        <p>
-                                            Payment Options
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a asp-controller="Bugs" asp-action="Index" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>View Packages</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Create a Package</p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a asp-controller="Bugs" asp-action="Create" class="nav-link bg-gradient-secondary">
-                                                <i class="far fa-circle nav-icon ml-3"></i>
-                                                <p>Package Issues</p>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
+                                
 
                             </ul>
                         </div>                        <div class="navbar-brand" style="position:absolute; left:10%; bottom:0;">

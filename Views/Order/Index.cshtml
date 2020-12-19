@@ -1,4 +1,6 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.OrderModel>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LaundryMS_AD2.Models.OrderModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,10 +14,14 @@
 <h4>Order Info</h4>
 
 <div class="card">
-    <div class="card-header">
-        <div class="row">
-            @*@if (@HttpContextAccessor.HttpContext.Session.GetString("SessionRole") != "Employee")*@
-            @*{*@
+    <br />
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+    {
+        <div class="card-header">
+
+            <div class="row">
+
+
 
                 <div class="col-9">
                     <a asp-action="Create" class="btn btn-info">Create New</a>
@@ -27,9 +33,11 @@
                         <a asp-action="OrderReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />All Order Report</a>
                     </div>
                 </div>
-            @*}*@
+
+            </div>
+
         </div>
-    </div>
+    }
     <div class="card-body">
         <table id="IndexTable" class="table">
             <thead>
@@ -111,8 +119,13 @@
                             <div class="btn-group">
 
                                 <a asp-action="Edit" asp-route-id="@item.OrderID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a> |
-                                <a asp-action="Details" asp-route-id="@item.OrderID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a> |
-                                <a asp-action="Delete" asp-route-id="@item.OrderID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.OrderID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a>
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.OrderID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+
+                                }
+
                             </div>
                         </td>
                     </tr>
@@ -120,6 +133,7 @@
             </tbody>
         </table>
     </div>
+    <br />
 </div>
 @section Scripts{
     <script>

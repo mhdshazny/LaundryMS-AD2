@@ -81,9 +81,10 @@
                                 <li><a asp-action="CusOrders" asp-controller="Presentation"><i class="fa fa-star"></i> Orders</a></li>
                                 <li><a asp-action="Checkout" asp-controller="Presentation"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a asp-action="Cart" asp-controller="Presentation"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                @if (HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+                                @if (HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != "")
                                 {
-                                    <li><a href=""><i class="fa fa-user"></i> @HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail")</a></li>
+                                    <li><a asp-action="CustomerInfo" asp-controller="CustomerLogin" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetString("SessionCusID")"><i class="fa fa-user"></i> @HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail")</a></li>
+                                    <li><a asp-action="Login" asp-controller="CustomerLogin"><i class="fa fa-lock"></i> Logout</a></li>
                                 }
                                 else
                                 {
@@ -115,15 +116,14 @@
                                 <li class="dropdown">
                                     <a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-                                        <li><a href="product-details.html">Product Details</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="#">Products</a></li>
+                                        <li><a href="#">Product Details</a></li>
+                                        <li><a href="#">Checkout</a></li>
+                                        <li><a href="#">Cart</a></li>
+                                        <li><a href="#">Login</a></li>
                                     </ul>
                                 </li>
-                               
-                                <li><a href="contact-us.html">Contact</a></li>
+                                <li><a href="#">Contact</a></li>
                             </ul>
                         </div>
                     </div>

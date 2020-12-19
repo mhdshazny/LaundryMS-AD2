@@ -1,0 +1,78 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Order List Report</title>
+    <link rel="stylesheet" href="~/Resources/vendor/bootstrap/css/bootstrap.css" />
+
+</head>
+    <body>
+        <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+            <h1 class="text-center">Order List Report</h1>
+            <h4 class="text-center">All Order Lists details from the beginning</h4>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderRefID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPrID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPkgUP)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPrQty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPrAmnt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPkg)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdListStatus)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderRefID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPrID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPkgUP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPrQty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPrAmnt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPkg)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdListStatus)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+    
+</html>

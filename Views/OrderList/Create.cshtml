@@ -9,13 +9,16 @@
 
 <h4>OrderListModel</h4>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="OrderRefID" class="control-label"></label>
-                <input asp-for="OrderRefID" class="form-control" value="@ViewBag.ReferenceID" readonly/>
+                @*<input asp-for="OrderRefID" class="form-control" value="@ViewBag.ReferenceID" readonly />*@
+                @Html.DropDownListFor(model => model.OrderRefID, ViewBag.ReferenceID as SelectList, "--Select a Package--", new { @class = "form-control" })
+
                 <span asp-validation-for="OrderRefID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,16 +51,37 @@
                 <input asp-for="OrdPrAmnt" id="TotAmnt" class="form-control" />
                 <span asp-validation-for="OrdPrAmnt" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="OrdListStatus" class="control-label"></label>
-                <input asp-for="OrdListStatus" class="form-control" />
+                @*<input asp-for="OrderStatus" class="form-control" />*@
+                <select asp-for="OrdListStatus" class="form-control">
+                    <option value="">--Select Order Status--</option>
+                    <option value="Added To Cart">Added To Cart</option>
+                    <option value="Order Placed">Order Placed</option>
+                    <option value="Ready To Deliver">Ready To Deliver</option>
+                    <option value="Delivered">Delivered</option>
+                </select>
                 <span asp-validation-for="OrdListStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+    <div class="col">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-75" src="https://www.pngkit.com/png/full/86-865631_bride-contemporary-western-wedding-dress-wedding-dress-vector.png" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-75" src="https://5.imimg.com/data5/UI/LB/GLADMIN-58307384/dry-cleaning-service-500x500.png" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-75" src="https://pngimg.com/uploads/suit/suit_PNG93239.png" alt="Third slide">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

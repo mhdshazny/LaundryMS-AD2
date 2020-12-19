@@ -91,6 +91,10 @@ namespace LaundryMS_AD2.Controllers
             {
                 return NotFound();
             }
+            //Product Type List
+            List<PrTypeModel> PrTypes = _context.PrTypeData.ToList();
+            ViewBag.PrType = new SelectList(PrTypes, "PrType", "PrType");
+
 
             var productModel = await _context.ProductData.FindAsync(id);
             if (productModel == null)

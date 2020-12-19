@@ -9,7 +9,7 @@
     <div class="review-payment">
         <h2>&nbsp;Review Cart</h2>
     </div>
-    @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != "")
     {
         @if (!Model.Any())
         {
@@ -79,7 +79,10 @@
                                     <p class="cart_total_price">@item.OrdPrAmnt</p>
                                 </td>
                                 <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                    <form asp-action="DeleteCart" method="post">
+                                        <input type="hidden" name="id" id="id" value="@item.OrdListID" />
+                                        <button type="submit" class="cart_quantity_delete"><i class="fa fa-times"></i></button>
+                                    </form>
                                 </td>
 
                         </tr>

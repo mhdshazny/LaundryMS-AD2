@@ -1,4 +1,6 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.UserModel>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LaundryMS_AD2.Models.UserModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,28 +9,35 @@
 
 <h1>Manage Employee-User</h1>
 
-<p>
-    <a asp-action="Create">Create New User</a>
-</p>
+<h5>Manage Employee Information</h5>
 
 <div class="card">
+    <div class="card-header">
 
-    @*@if (HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Admin")
-    {
-        <div class="card-header">
-            <a asp-action="Create" class="btn btn-info">Create New</a>
-        </div>
-    }
-    else if (HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Manager")
-    {
-        <div class="card-header">
-            <a asp-action="Create" class="btn btn-info">Create New</a>
-        </div>
-    }*@
+        <div class="row">
 
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+            {
+                <div class="col">
+                    <a class="btn btn-primary" asp-action="Create">Create New</a>
+                </div>
+                <div class="col">
+                    <div class="btn-group ">
+                        <a asp-action="EmployeeReport" asp-route-data="Active" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Active Employee Report</a>|
+                        <a asp-action="EmployeeReport" asp-route-data="Inactive" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Inactive Employee Report</a>|
+                        <a asp-action="EmployeeReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />All Employee Details Report</a>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+
+    </div>
 
     <!-- /.card-header -->
     <div class="card-body">
+
         <table id="UserTable" class="table table-responsive">
             <thead>
                 <tr>
@@ -71,49 +80,57 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.lName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DoB)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NIC)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Contact)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Role)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        <div class="btn-group">
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.lName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NIC)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.UserID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.UserID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a>
 
-                            <a asp-action="Edit" asp-route-id="@item.UserID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a> |
-                            <a asp-action="Details" asp-route-id="@item.UserID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.UserID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </td>
-                </tr>
+
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.UserID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+                                }
+
+
+
+
+                            </div>
+                        </td>
+                    </tr>
                 }
 
             </tbody>
@@ -127,11 +144,11 @@
         $(document).ready(function () {
             $("#UserTable").DataTable();
         });
-            //function UserReport() {
-            //    var id = id;
-            //    window.open(
-            //        //asp - controller="User" asp - action="UserReport"
-            //        "User/UserReportIndividual", "_blank", id);
-            //}
+                //function UserReport() {
+                //    var id = id;
+                //    window.open(
+                //        //asp - controller="User" asp - action="UserReport"
+                //        "User/UserReportIndividual", "_blank", id);
+                //}
     </script>
 }

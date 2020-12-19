@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col">
 
-            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != "")
             {
                 @if (!Model.Any())
                 {
@@ -35,103 +35,281 @@
                                 <ul class="stepper stepper-vertical" style="padding-top:0">
 
                                     <!-- First Step -->
-                                    @if (item.OrderStatus != "Order Placed")
-                                    {
-                                        <li class="completed">
-                                            <a href="#!">
-                                                <span class="circle">1</span>
-                                                <span class="label">Cart Accepted</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="active">
-                                            <a href="#!">
-                                                <span class="circle">1</span>
-                                                <span class="label">Order Placed</span>
-                                            </a>
-                                        </li>
-                                    }
 
-                                    @if (item.OrderStatus != "Processing")
+                                    @if (item.OrderStatus == "Order Placed")
                                     {
-                                        <li class="active">
+                                    <li class="completed">
+                                        <a href="#!">
+                                            <span class="circle">1</span>
+                                            <span class="label">Order Placed</span>
+                                        </a>
+
+                                    </li>
+                                        <li class="info">
 
                                             <!--Section Title -->
                                             <a href="#!">
                                                 <span class="circle">2</span>
-                                                <span class="label">Order Processed</span>
+                                                <span class="label">Process Order</span>
                                             </a>
 
                                             <!-- Section Description -->
                                             <div class="step-content grey lighten-3">
                                                 <p>
-                                                    Order Syccessfully Processed.
+                                                    Waiting Process Order.
                                                 </p>
                                             </div>
                                         </li>
 
-                                    }
-                                    else
-                                    {
-                                        <li class="active">
-
-                                            <!--Section Title -->
-                                            <a href="#!">
-                                                <span class="circle">2</span>
-                                                <span class="label">Order Processing</span>
-                                            </a>
-
-                                            <!-- Section Description -->
-                                            <div class="step-content grey lighten-3">
-                                                <p>
-                                                    Order Syccessfully Processed.
-                                                </p>
-                                            </div>
-                                        </li>
-                                    }
-                                    <!-- Second Step -->
-                                    <!-- Third Step -->
-                                    @if (item.OrderStatus != "Ready To Deliver")
-                                    {
-
-                                        <li class="active">
+                                        <li class="info">
                                             <a href="#!">
                                                 <span class="circle">3</span>
-                                                <span class="label">Dispatched and Sent for Delivery</span>
+                                                <span class="label">Dispatch for Delivery</span>
                                             </a>
                                         </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="active">
-                                            <a href="#!">
-                                                <span class="circle">3</span>
-                                                <span class="label">Sent for Deliver</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    <!-- Fourth Step -->
 
-                                    @if (item.OrderStatus != "Delivered")
-                                    {
-                                        <li>
+                                        <li class="info">
                                             <a href="#!">
                                                 <span class="circle">4</span>
                                                 <span class="label">Delivery</span>
                                             </a>
                                         </li>
+
+
                                     }
-                                    else
+                                    
+                                    @if (item.OrderStatus == "Order Accepted")
                                     {
-                                        <li class="active">
+                                <li class="completed">
+                                    <a href="#!">
+                                        <span class="circle">1</span>
+                                        <span class="label">Order Accepted</span>
+                                    </a>
+                                    <div class="step-content grey lighten-3">
+                                        <p>
+                                            Order approved
+                                        </p>
+                                    </div>
+                                </li>
+                                        <li class="info">
+
+                                            <!--Section Title -->
                                             <a href="#!">
-                                                <span class="circle">4</span>
-                                                <span class="label">Successfully Delivered</span>
+                                                <span class="circle">2</span>
+                                                <span class="label">Process Order</span>
+                                            </a>
+
+                                            <!-- Section Description -->
+                                            <div class="step-content grey lighten-3">
+                                                <p>
+                                                    Waiting Process Order.
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li class="info">
+                                            <a href="#!">
+                                                <span class="circle">3</span>
+                                                <span class="label">Dispatch for Delivery</span>
                                             </a>
                                         </li>
+
+                                        <li class="info">
+                                            <a href="#!">
+                                                <span class="circle">4</span>
+                                                <span class="label">Delivery</span>
+                                            </a>
+                                        </li>
+
+
                                     }
+
+
+
+
+                                    @if (item.OrderStatus == "Order Processing")
+                                    {
+                                <li class="completed">
+                                    <a href="#!">
+                                        <span class="circle">1</span>
+                                        <span class="label">Cart Accepted</span>
+                                    </a>
+                                    <div class="step-content grey lighten-3">
+                                        <p>
+                                            Order approved
+                                        </p>
+                                    </div>
+                                </li>
+                                        <li class="completed">
+
+                                            <!--Section Title -->
+                                            <a href="#">
+                                                <span class="circle">2</span>
+                                                <span class="label">Processing Order</span>
+                                            </a>
+
+                                            <!-- Section Description -->
+                                            <div class="step-content grey lighten-3">
+                                                <p>
+                                                    Still processing your Order.
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li class="info">
+                                            <a href="#!">
+                                                <span class="circle">3</span>
+                                                <span class="label">Dispatch for Delivery</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="info">
+                                            <a href="#!">
+                                                <span class="circle">4</span>
+                                                <span class="label">Delivery</span>
+                                            </a>
+                                        </li>
+
+                                    }
+
+                                    @if (item.OrderStatus == "Ready For Delivery")
+                                    {
+                                <li class="completed">
+                                    <a href="#!">
+                                        <span class="circle">1</span>
+                                        <span class="label">Cart Accepted</span>
+                                    </a>
+                                    <div class="step-content grey lighten-3">
+                                        <p>
+                                            Order approved
+                                        </p>
+                                    </div>
+                                </li>
+                                        <li class="completed">
+
+                                            <!--Section Title -->
+                                            <a href="#">
+                                                <span class="circle">2</span>
+                                                <span class="label">Processing Order</span>
+                                            </a>
+
+                                            <!-- Section Description -->
+                                            <div class="step-content grey lighten-3">
+                                                <p>
+                                                    Still processing your Order.
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li class="completed">
+                                            <a href="#!">
+                                                <span class="circle">3</span>
+                                                <span class="label">Sent for Delivery</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="info">
+                                            <a href="#!">
+                                                <span class="circle">4</span>
+                                                <span class="label">Delivery</span>
+                                            </a>
+                                        </li>
+
+
+                                    }
+
+                                    @if (item.OrderStatus == "Ready To Deliver")
+                                    {
+
+                                <li class="completed">
+                                    <a href="#!">
+                                        <span class="circle">1</span>
+                                        <span class="label">Cart Accepted</span>
+                                    </a>
+                                    <div class="step-content grey lighten-3">
+                                        <p>
+                                            Order approved
+                                        </p>
+                                    </div>
+                                </li>
+                                        <li class="completed">
+
+                                            <!--Section Title -->
+                                            <a href="#">
+                                                <span class="circle">2</span>
+                                                <span class="label">Processing Order</span>
+                                            </a>
+
+                                            <!-- Section Description -->
+                                            <div class="step-content grey lighten-3">
+                                                <p>
+                                                    Still processing your Order.
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li class="completed">
+                                            <a href="#!">
+                                                <span class="circle">3</span>
+                                                <span class="label">Sent for Delivery</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="info">
+                                            <a href="#!">
+                                                <span class="circle">4</span>
+                                                <span class="label">Delivery</span>
+                                            </a>
+                                        </li>
+
+                                    }
+
+
+                                    @if (item.OrderStatus == "Delivered")
+                                    {
+                                <li class="completed">
+                                    <a href="#!">
+                                        <span class="circle">1</span>
+                                        <span class="label">Cart Accepted</span>
+                                    </a>
+                                    <div class="step-content grey lighten-3">
+                                        <p>
+                                            Order approved
+                                        </p>
+                                    </div>
+                                </li>
+                                        <li class="completed">
+
+                                            <!--Section Title -->
+                                            <a href="#">
+                                                <span class="circle">2</span>
+                                                <span class="label">Processing Order</span>
+                                            </a>
+
+                                            <!-- Section Description -->
+                                            <div class="step-content grey lighten-3">
+                                                <p>
+                                                    Still processing your Order.
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li class="completed">
+                                            <a href="#!">
+                                                <span class="circle">3</span>
+                                                <span class="label">Sent for Delivery</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="completed">
+                                            <a href="#!">
+                                                <span class="circle">4</span>
+                                                <span class="label">Delivered Successfully</span>
+                                            </a>
+                                        </li>
+
+                                    }
+
 
                                 </ul>
                                 <!-- /.Stepers Wrapper -->
