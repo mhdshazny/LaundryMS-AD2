@@ -1,4 +1,6 @@
-﻿@model LaundryMS_AD2.Models.OrderModel
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model LaundryMS_AD2.Models.OrderModel
 
 @{
     ViewData["Title"] = "Create";
@@ -9,76 +11,146 @@
 
 <h4>OrderModel</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="OrderID" class="control-label"></label>
-                <input asp-for="OrderID" class="form-control" value="@ViewBag.NewID" readonly />
-                <span asp-validation-for="OrderID" class="text-danger"></span>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group row">
+                <label asp-for="OrderID" class="col-md-1 col-form-label col-form-label-md"></label>
+                <div class="col-11">
+                    <input asp-for="OrderID" class="form-control form-control-md" value="@ViewBag.NewID" readonly />
+                    <span asp-validation-for="OrderID" class="text-danger"></span>
+                </div>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderRefNo" class="control-label"></label>
-                <input asp-for="OrderRefNo" class="form-control" value="@ViewBag.ReferenceID" readonly/>
+                @Html.DropDownListFor(model => model.OrderRefNo, ViewBag.ReferenceID as SelectList, "--Select a Package--", new { @class = "form-control" })
                 <span asp-validation-for="OrderRefNo" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderCusID" class="control-label"></label>
-                <input asp-for="OrderCusID" class="form-control" value="@ViewBag.Customer"/>
+                <input asp-for="OrderCusID" class="form-control" />
                 <span asp-validation-for="OrderCusID" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderApprvdBy" class="control-label"></label>
-                <input asp-for="OrderApprvdBy" class="form-control" />
+                <input asp-for="OrderApprvdBy" class="form-control bg-info" value="@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpID")" />
                 <span asp-validation-for="OrderApprvdBy" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderTotQty" class="control-label"></label>
-                <input asp-for="OrderTotQty" class="form-control" value="@ViewBag.PrQty" />
+                <input asp-for="OrderTotQty" class="form-control" />
                 <span asp-validation-for="OrderTotQty" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderTotAmnt" class="control-label"></label>
-                <input asp-for="OrderTotAmnt" class="form-control" value="@ViewBag.TotAmnt"/>
+                <input asp-for="OrderTotAmnt" class="form-control" />
                 <span asp-validation-for="OrderTotAmnt" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderDate" class="control-label"></label>
                 <input asp-for="OrderDate" class="form-control" />
                 <span asp-validation-for="OrderDate" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderDelivery" class="control-label"></label>
                 <input asp-for="OrderDelivery" class="form-control" />
                 <span asp-validation-for="OrderDelivery" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderDeliveryAddress" class="control-label"></label>
                 <textarea asp-for="OrderDeliveryAddress" class="form-control"></textarea>
                 <span asp-validation-for="OrderDeliveryAddress" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderDescr" class="control-label"></label>
                 <textarea asp-for="OrderDescr" class="form-control"></textarea>
                 <span asp-validation-for="OrderDescr" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
             <div class="form-group">
                 <label asp-for="OrderPaymentStatus" class="control-label"></label>
-                <input asp-for="OrderPaymentStatus" class="form-control">
+                @*<input asp-for="OrderPaymentStatus" class="form-control" readonly />*@
+                <select asp-for="OrderPaymentStatus" class="form-control">
+                    <option value="">--Select Order Payment Status--</option>
+                    <option value="Cash On Delivery">Cash On Delivery</option>
+                    <option value="Paid">Paid</option>
+                </select>
                 <span asp-validation-for="OrderPaymentStatus" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col">
+
             <div class="form-group">
                 <label asp-for="OrderStatus" class="control-label"></label>
-                <input asp-for="OrderStatus" class="form-control" />
+                @*<input asp-for="OrderStatus" class="form-control" />*@
+                <select asp-for="OrderStatus" class="form-control">
+                    <option value="">--Select Order Status--</option>
+                    <option value="Order Accepted">Order Accepted</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Ready To Deliver">Ready To Deliver</option>
+                    <option value="Delivered">Delivered</option>
+                </select>
                 <span asp-validation-for="OrderStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <hr />
+    <br />
+
+    <div class="form-row pb-3">
+        <div class="col">
+
+        </div>
+        <div class="col">
+            <input type="submit" value="Save" class="btn-block btn-primary form-control" />
+        </div>
+        <div class="col mt-2">
+            <a asp-action="Index" class="pl-5">Back to List</a>
+
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>*@
+</form>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

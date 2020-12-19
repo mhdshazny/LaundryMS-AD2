@@ -15,7 +15,7 @@
 
 
 
-        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != "")
         {
             <div class="step-one">
                 <h2 class="heading">Ordering Process</h2>

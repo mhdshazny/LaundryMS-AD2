@@ -34,7 +34,7 @@ namespace LaundryMS_AD2.Controllers
             CustomerModel CustomerData = await _context.CustomerData
                                 .Where(c => c.CusID == User)
                                 .FirstOrDefaultAsync();
-            if (User != null)
+            if (User != "")
             {
                 ViewBag.CusID = CustomerData.CusID.ToString();
                 ViewBag.CusName = CustomerData.CusfName.ToString();
@@ -46,8 +46,12 @@ namespace LaundryMS_AD2.Controllers
                 var WaitingOrdList = await _context.OrderListData
                                  .Where(m => m.OrdListStatus == "Added To Cart" && m.OrderRefID.Contains(User))
                                  .ToListAsync();
+                if (WaitingOrdList.Count != 0)
+                {
                 var OneItem = WaitingOrdList.Where(i => i.OrderRefID.Contains(User)).FirstOrDefault();
                 ViewBag.OrdRefID = OneItem.OrderRefID;
+
+                }
                 ViewBag.OrdNewID = NewOrdId().ToString();
 
                 return View(WaitingOrdList);
@@ -270,9 +274,11 @@ namespace LaundryMS_AD2.Controllers
                 {
                 orderModel.OrderStatus = "Order Placed";
                     _context.Add(orderModel);
+                    await UpdateOrderList(orderModel.OrderCusID);
                     await _context.SaveChangesAsync();
+                    
                     return RedirectToAction(nameof(Index));
-            }
+                }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!OrderModelExists(orderModel.OrderID))
@@ -284,11 +290,48 @@ namespace LaundryMS_AD2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
         }
+
+        public async Task<bool> UpdateOrderList(string OrderCusID)
+        {
+            bool result = false;
+            var OrderList = await _context.OrderListData.Where(i => i.OrderRefID.Contains(OrderCusID) && i.OrdListStatus == "Added To Cart").ToListAsync();
+            if (OrderList.Count > 0)
+            {
+                foreach(var item in OrderList)
+                {
+                    OrderListModel ordListModel = new OrderListModel();
+                    ordListModel.OrderRefID = item.OrderRefID;
+                    ordListModel.OrdListID = item.OrdListID;
+                    ordListModel.OrdListStatus = "Order Placed";
+                    ordListModel.OrdPkg = item.OrdPkg;
+                    ordListModel.OrdPkgUP = item.OrdPkgUP;
+                    ordListModel.OrdPrAmnt = item.OrdPrAmnt;
+                    ordListModel.OrdPrID = item.OrdPrID;
+                    ordListModel.OrdPrQty = item.OrdPrQty;
+
+                    _context.Entry(await _context.OrderListData.FirstOrDefaultAsync(x => x.OrdListID == ordListModel.OrdListID)).CurrentValues.SetValues(ordListModel);
+                    await _context.SaveChangesAsync();
+                }
+                return true;
+
+            }
+            return result;
+        }
+
         private bool OrderModelExists(string id)
         {
             return _context.OrderData.Any(e => e.OrderID == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCart(int id)
+        {
+            var orderListModel = await _context.OrderListData.FindAsync(id);
+            _context.OrderListData.Remove(orderListModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Cart","Presentation");
         }
     }
 }

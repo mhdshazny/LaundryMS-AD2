@@ -360,7 +360,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @if (HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != null)
+            @if (HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != "")
             {<form asp-action="AddToCart" method="post">
 
                     <div class="modal-body">

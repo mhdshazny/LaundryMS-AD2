@@ -8,35 +8,13 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-md-5">
-                <h2>Login to your account</h2>
-                <br /><br />
-                <div class="login-form">
-                    <!--login form-->
-                    <form action="Verify" method="post">
-                        <input asp-for="CusEmail" placeholder="Email Address" />
-                        <span asp-validation-for="CusEmail" class="text-danger"></span>
 
-                        <input asp-for="CusPassw" placeholder="Password" />
-                        <span asp-validation-for="CusPassw" class="text-danger"></span>
-
-                        <span>
-                            <input type="checkbox" class="checkbox">
-                            Keep me signed in
-                        </span>
-                        <button type="submit" class="btn btn-default">Login</button>
-                    </form>
-                </div><!--/login form-->
-            </div>
-            <div class="col-sm-2">
-                <h2 class="or center-block">OR</h2>
-            </div>
-            <div class="col-sm-5">
+            <div class="col-sm">
                 <div class="signup-form">
                     <!--sign up form-->
-                    <h2>New User Signup!</h2>
-                    <form action="Create" method="post">
-                        <input asp-for="CusID" placeholder="Customer ID" value="@ViewBag.NewID" readonly/>
+                    <h2>Update User Information!</h2>
+                    <form asp-action="Update" method="post">
+                        <input asp-for="CusID" placeholder="Customer ID" readonly />
                         <span asp-validation-for="CusID" class="text-danger"></span>
 
                         <input asp-for="CusfName" placeholder="First Name" />

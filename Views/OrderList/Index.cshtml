@@ -1,76 +1,112 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LaundryMS_AD2.Models.OrderListModel>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Manage Customer Cart and Order List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table id="IndexTable" class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderRefID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdPrID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdPkgUP)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdPrQty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdPrAmnt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdPkg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdListStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderRefID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrdPrID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrdPkgUP)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrdPrQty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrdPrAmnt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrdPkg)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrdListStatus)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.OrdListID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.OrdListID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrdListID">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="card">
+    <div class="card-header">
+
+        <div class="row">
+            <div class="col-9">
+                <a class="btn btn-primary" asp-action="Create">Create New</a>
+            </div>
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+            {
+
+
+
+
+                <div class="col">
+                    <div class="btn-group ">
+                        <a asp-action="OrderListReport" asp-route-data="Pending" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Pending Carts Report</a>|
+                        <a asp-action="OrderListReport" asp-route-data="Delivered" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Delivered Products Report</a>|
+                        <a asp-action="OrderListReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />All Order List Report</a>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+
+    </div>
+    <div class="card-body">
+        <table id="IndexTable" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderRefID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPrID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPkgUP)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPrQty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPrAmnt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdPkg)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrdListStatus)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderRefID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPrID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPkgUP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPrQty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPrAmnt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdPkg)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrdListStatus)
+                        </td>
+                        <td>
+
+                            <a asp-action="Edit" asp-route-id="@item.OrdListID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.OrdListID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a>
+                            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.OrdListID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+
+                            }
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 @section Scripts{
     <script>
 

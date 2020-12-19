@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LaundryMS_AD2.Models;
+using Rotativa.AspNetCore;
+using Microsoft.AspNetCore.Http;
 
 namespace LaundryMS_AD2.Controllers
 {
@@ -21,6 +23,12 @@ namespace LaundryMS_AD2.Controllers
         // GET: User
         public async Task<IActionResult> Index()
         {
+            if(HttpContext.Session.GetString("SessionEmpRole") == "Employee")
+            {
+                var id = HttpContext.Session.GetString("SessionEmpID");
+                return View(await _context.UserData.Where(i=>i.UserID==id).ToListAsync());
+
+            }
             return View(await _context.UserData.ToListAsync());
         }
 
@@ -92,6 +100,9 @@ namespace LaundryMS_AD2.Controllers
             {
                 return NotFound();
             }
+            //Role List
+            List<EmpRoleModel> Role = _context.EmpRoleData.ToList();
+            ViewBag.Roles = new SelectList(Role, "EmpRole", "EmpRole");
 
             var userModel = await _context.UserData.FindAsync(id);
             ViewBag.Passw = userModel.Password.ToString();
@@ -170,6 +181,24 @@ namespace LaundryMS_AD2.Controllers
         private bool UserModelExists(string id)
         {
             return _context.UserData.Any(e => e.UserID == id);
+        }
+
+        public async Task<IActionResult> EmployeeReport(string data)
+        {
+            if (data != null)
+            {
+                if (data == "Active")
+                {
+                    var OrderDelivered = await _context.UserData.Where(i => i.UserID == data).ToListAsync();
+                    return new ViewAsPdf(OrderDelivered);
+
+                }
+                var OrderPending = await _context.UserData.Where(i => i.Status != "Active").ToListAsync();
+                return new ViewAsPdf(OrderPending);
+            }
+            var OrderData = await _context.UserData.ToListAsync();
+
+            return new ViewAsPdf(OrderData);
         }
     }
 }

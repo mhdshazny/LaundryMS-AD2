@@ -1,0 +1,96 @@
+﻿@model IEnumerable<LaundryMS_AD2.Models.CustomerModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Order List Report</title>
+    <link rel="stylesheet" href="~/Resources/vendor/bootstrap/css/bootstrap.css" />
+
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Customer Report</h1>
+        <h4 class="text-center">All Customer details from the beginning</h4>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusfName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CuslName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusNIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusGender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusContact)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusPassw)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CusStatus)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusfName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CuslName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusNIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusGender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusContact)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusPassw)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CusStatus)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

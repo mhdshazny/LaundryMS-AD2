@@ -1,30 +1,38 @@
-﻿@model IEnumerable<LaundryMS_AD2.Models.CustomerModel>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@model IEnumerable<LaundryMS_AD2.Models.CustomerModel>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Customer Information Management</h1>
+<br />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <div class="card">
+    <div class="card-header">
 
-    @*@if (HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Admin")
-        {
-            <div class="card-header">
-                <a asp-action="Create" class="btn btn-info">Create New</a>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary" asp-action="Create">Create New</a>
             </div>
-        }
-        else if (HttpContextAccessor.HttpContext.Session.GetString("SessionRole") == "Manager")
-        {
-            <div class="card-header">
-                <a asp-action="Create" class="btn btn-info">Create New</a>
-            </div>
-        }*@
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+            {
+                <div class="col">
+                    <div class="btn-group ">
+                        <a asp-action="CustomerReport" asp-route-data="Active" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Active Customer Report</a>|
+                        <a asp-action="CustomerReport" asp-route-data="Inactive" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Inactive Customer Report</a>|
+                        <a asp-action="CustomerReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />All Customer Details Report</a>
+                    </div>
+                </div>
 
+
+            }
+        </div>
+
+    </div>
 
     <!-- /.card-header -->
     <div class="card-body">
@@ -90,21 +98,26 @@
                             <div class="btn-group">
 
                                 <a asp-action="Edit" asp-route-id="@item.CusID" class="btn btn-dark btn-md"><i class="fas fa-edit"></i></a> |
-                                <a asp-action="Details" asp-route-id="@item.CusID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a> |
-                                <a asp-action="Delete" asp-route-id="@item.CusID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.CusID" class="btn btn-info btn-md"><i class="fas fa-eye"></i></a>
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.CusID" class="btn btn-danger btn-md"><i class="fas fa-trash"></i></a>
+
+                                }
+
                             </div>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        </div>
     </div>
-        @section Scripts{
-            <script>
+</div>
+@section Scripts{
+    <script>
 
-                $(document).ready(function () {
-                    $("#IndexTable").DataTable();
-                });
-            </script>
-        }
+        $(document).ready(function () {
+            $("#IndexTable").DataTable();
+        });
+    </script>
+}

@@ -5,15 +5,20 @@
     Layout = "~/Views/Shared/_LMSAdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Change Peoduct Information</h1>
 
-<h4>ProductModel</h4>
+<h4>Product Information</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PrID" />
+
+            <div class="form-group">
+                <label asp-for="PrID" class="control-label"></label>
+                <input asp-for="PrID" class="form-control" readonly />
+                <span asp-validation-for="PrID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="PrName" class="control-label"></label>
                 <input asp-for="PrName" class="form-control" />
@@ -21,29 +26,58 @@
             </div>
             <div class="form-group">
                 <label asp-for="PrType" class="control-label"></label>
-                <input asp-for="PrType" class="form-control" />
+                @*<input asp-for="PrType" class="form-control" />*@
+                @Html.DropDownListFor(model => model.PrType, ViewBag.PrType as SelectList, "--Select Product Type--", new { @class = "form-control" })
                 <span asp-validation-for="PrType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrDescr" class="control-label"></label>
-                <input asp-for="PrDescr" class="form-control" />
+                <textarea asp-for="PrDescr" class="form-control"></textarea>
                 <span asp-validation-for="PrDescr" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrStatus" class="control-label"></label>
-                <input asp-for="PrStatus" class="form-control" />
+                <select asp-for="PrStatus" class="form-control">
+                    <option value="">--Select Product Status--</option>
+                    <option value="Available">Available</option>
+                    <option value="Unavailable">Unavailable</option>
+                </select>                
                 <span asp-validation-for="PrStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <div class="form-row mt-5">
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+                        <input type="submit" value="Create" class="btn-block btn-primary form-control" />
+
+                    </div>
+                    <div class="col mt-2">
+                        <a asp-action="Index" class="pl-5">Back to List</a>
+
+                    </div>
+                </div>
             </div>
         </form>
     </div>
+    <div class="col">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-75" src="https://www.pngkit.com/png/full/86-865631_bride-contemporary-western-wedding-dress-wedding-dress-vector.png" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-75" src="https://5.imimg.com/data5/UI/LB/GLADMIN-58307384/dry-cleaning-service-500x500.png" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-75" src="https://pngimg.com/uploads/suit/suit_PNG93239.png" alt="Third slide">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
